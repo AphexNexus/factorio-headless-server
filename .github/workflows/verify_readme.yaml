@@ -4,13 +4,14 @@ on:
 
 jobs:
   verify-docs:
-    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 This job uses runner scale set runners!"
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Install Golang
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v7.0.0
         with:
           go-version: 'stable'
       - name: install chart-doc-gen

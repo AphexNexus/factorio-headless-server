@@ -11,7 +11,7 @@ jobs:
       - run: echo "🎉 This job uses runner scale set runners!"
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v2.4.2
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
