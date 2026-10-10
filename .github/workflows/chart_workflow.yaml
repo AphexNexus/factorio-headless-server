@@ -5,7 +5,9 @@ on:
 jobs:
   lint-test:
     name: "Lint and Test"
-    runs-on: ubuntu-22.04
+    runs-on: arc-runner-set
+    steps:
+      - run: echo "🎉 This job uses runner scale set runners!"
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2.4.2
@@ -52,11 +54,13 @@ jobs:
         if: steps.list-changed.outputs.changed == 'true' && github.ref != 'refs/heads/main'
 
   release:
-    runs-on: ubuntu-latest
+    runs-on: arc-runner-set
     if: github.ref == 'refs/heads/main'
     needs:
       - lint-test
     name: "Release Chart on GH"
+    steps:
+      - run: echo "🎉 This job uses runner scale set runners!"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
