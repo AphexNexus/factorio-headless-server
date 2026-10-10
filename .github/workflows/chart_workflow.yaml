@@ -7,12 +7,15 @@ jobs:
     name: "Lint and Test"
     runs-on: arc-runner-set
     steps:
-      - run: echo "🎉 This job uses runner scale set runners!"
-    steps:
       - name: "Checkout"
         uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
+
+      - name: Install envsubst
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gettext
 
       - name: "Set Up Helm"
         uses: azure/setup-helm@v5.0.1
@@ -29,8 +32,6 @@ jobs:
       - name: "Set up chart-testing"
         uses: helm/chart-testing-action@v2.9.0
         if: github.ref != 'refs/heads/main'
-        with:
-          version: v3.18.4
 
       - name: "Run chart-testing (list-changed)"
         id: list-changed
@@ -59,8 +60,6 @@ jobs:
     needs:
       - lint-test
     name: "Release Chart on GH"
-    steps:
-      - run: echo "🎉 This job uses runner scale set runners!"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
