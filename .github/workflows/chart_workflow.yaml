@@ -10,27 +10,27 @@ jobs:
       - run: echo "🎉 This job uses runner scale set runners!"
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v2.4.2
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
       - name: "Set Up Helm"
-        uses: azure/setup-helm@v3.3
+        uses: azure/setup-helm@v5.0.1
         if: github.ref != 'refs/heads/main'
         with:
-          version: v3.4.1
+          version: v3.18.4
 
       - name: "Set Up Python"
-        uses: actions/setup-python@v4.2.0
+        uses: actions/setup-python@v7.0.0
         if: github.ref != 'refs/heads/main'
         with:
-          python-version: 3.9
+          python-version: 3.13
 
       - name: "Set up chart-testing"
-        uses: helm/chart-testing-action@v2.3.0
+        uses: helm/chart-testing-action@v2.9.0
         if: github.ref != 'refs/heads/main'
         with:
-          version: v3.3.0
+          version: v3.18.4
 
       - name: "Run chart-testing (list-changed)"
         id: list-changed
@@ -46,7 +46,7 @@ jobs:
         if: steps.list-changed.outputs.changed == 'true' && github.ref != 'refs/heads/main'
 
       - name: Create kind cluster
-        uses: helm/kind-action@v1.4.0
+        uses: helm/kind-action@v1.15.1
         if: steps.list-changed.outputs.changed == 'true' && github.ref != 'refs/heads/main'
 
       - name: Run chart-testing (install)
@@ -73,11 +73,11 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Install Helm
-        uses: azure/setup-helm@v1
+        uses: azure/setup-helm@v5.0.1
         with:
-          version: v3.4.0
+          version: v3.18.4
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.0.0
+        uses: helm/chart-releaser-action@v1.8.1
         env:
             CR_TOKEN: '${{ secrets.CR_TOKEN }}'
