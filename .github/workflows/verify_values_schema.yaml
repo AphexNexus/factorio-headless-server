@@ -8,8 +8,6 @@ jobs:
     name: "Verify Chart Schema"
     runs-on: arc-runner-set
     steps:
-      - run: echo "🎉 This job uses runner scale set runners!"
-    steps:
       - name: "Checkout"
         uses: actions/checkout@v7.0.1
         with:

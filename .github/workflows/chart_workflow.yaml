@@ -7,8 +7,6 @@ jobs:
     name: "Lint and Test"
     runs-on: arc-runner-set
     steps:
-      - run: echo "🎉 This job uses runner scale set runners!"
-    steps:
       - name: "Checkout"
         uses: actions/checkout@v7.0.1
         with:
@@ -59,8 +57,6 @@ jobs:
     needs:
       - lint-test
     name: "Release Chart on GH"
-    steps:
-      - run: echo "🎉 This job uses runner scale set runners!"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
