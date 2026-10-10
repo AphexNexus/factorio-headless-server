@@ -16,11 +16,11 @@ keywords:
   - server
   - headless
 sources:
-  - https://github.com/SQLJames/factorio-server-charts
+  - https://github.com/justindesilets/factorio-server-charts
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 2.5.2
+version: 2.5.3
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -28,8 +28,8 @@ version: 2.5.2
 
 # (optional)
 maintainers:
-  - name: James Rhoat
-    email: James@Rhoat.com
+  - name: Justin Desilets
+    email: justin.desilets@gmail.com
 appVersion: 1.0.0
 deprecated: false
 
