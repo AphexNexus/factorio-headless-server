@@ -1,6 +1,11 @@
 name: Lint, Test and Deploy Charts
 on:
   push:
+    branches:
+      - main
+
+permissions:
+  contents: write
 
 jobs:
   lint-test:
