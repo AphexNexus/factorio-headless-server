@@ -1,5 +1,11 @@
 ## Changelog
 
+### V2.5.3 - 20261010
+
+#### Init of fork
+
+- Forked repo with intent of updating and maintaining
+- Updated links in charts to fork repo
 
 ### V2.5.2
 
