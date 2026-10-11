@@ -4,7 +4,7 @@ gen: gen-chart-doc
 .PHONY: gen-chart-doc
 gen-chart-doc:
 	@echo "Generate chart docs"
-	@chart-doc-gen -t=./charts/factorio-server-charts/readme.tpl -d=./charts/factorio-server-charts/doc.yaml -v=./charts/factorio-server-charts/values.yaml > ./charts/factorio-server-charts/README.md
+	@helm-docs -t=./charts/factorio-server-charts/readme.tpl -d=./charts/factorio-server-charts/doc.yaml -v=./charts/factorio-server-charts/values.yaml > ./charts/factorio-server-charts/README.md
 
 .PHONY: gen-schema
 gen-schema:
