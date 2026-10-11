@@ -3,6 +3,26 @@ entries:
   factorio-server-charts:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2026-10-11T15:04:11.283389626Z"
+    description: A Helm chart for running factorio in kubernetes
+    digest: f1bc638ebba4befc3da18e8291484e1a8b9b8c0185c330eacc6e68bbc806269c
+    icon: https://factorio.com/static/img/factorio-wheel.png
+    keywords:
+    - game
+    - server
+    - headless
+    maintainers:
+    - email: justin.desilets@gmail.com
+      name: Justin Desilets
+    name: factorio-server-charts
+    sources:
+    - https://github.com/aphexnexus/factorio-server-charts
+    type: application
+    urls:
+    - https://github.com/AphexNexus/factorio-server-charts/releases/download/factorio-server-charts-2.5.4/factorio-server-charts-2.5.4.tgz
+    version: 2.5.4
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2026-10-10T23:11:42.354505699Z"
     description: A Helm chart for running factorio in kubernetes
     digest: 8dee69e4a8d1112b43c76c2da732e4d3a8f8b6995d04b2c754f5dfecde231973
@@ -21,4 +41,4 @@ entries:
     urls:
     - https://github.com/justindesilets/factorio-server-charts/releases/download/factorio-server-charts-2.5.3/factorio-server-charts-2.5.3.tgz
     version: 2.5.3
-generated: "2026-10-10T23:11:42.354570903Z"
+generated: "2026-10-11T15:04:11.283420058Z"
