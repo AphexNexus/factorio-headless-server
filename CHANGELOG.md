@@ -1,5 +1,11 @@
 ## Changelog
 
+### V2.5.4 - 20261011
+
+#### Doc related updates
+
+- Changes in progress to migrate from a personal Github account to an Org.
+
 ### V2.5.3 - 20261010
 
 #### Init of fork
@@ -38,7 +44,7 @@
 
 #### Potentially Breaking Changes
 
-- Removing the chown of the data directory initialization and instead switching the security context to use the factorio user specified in [factorio docker](https://github.com/factoriotools/factorio-docker/blob/master/docker/Dockerfile). This will fix the nfs permissions but could potentially cause issues elsewhere if you were setting the security context. 
+- Removing the chown of the data directory initialization and instead switching the security context to use the factorio user specified in [factorio docker](https://github.com/factoriotools/factorio-docker/blob/master/docker/Dockerfile). This will fix the nfs permissions but could potentially cause issues elsewhere if you were setting the security context.
 
 ### V2.3.0
 
@@ -87,7 +93,7 @@
 
 #### Non-Breaking Changes
 
-- Added new PVC labels - Thank you ohnoitsyou 
+- Added new PVC labels - Thank you ohnoitsyou
 
 ### V2.0.3
 
