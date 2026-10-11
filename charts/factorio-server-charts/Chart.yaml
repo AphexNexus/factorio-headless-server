@@ -30,6 +30,7 @@ version: 2.5.4
 maintainers:
   - name: Justin Desilets
     email: justin.desilets@gmail.com
+    url: https://github.com/justindesilets
 appVersion: 1.0.0
 deprecated: false
 
