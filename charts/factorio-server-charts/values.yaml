@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=values.schema.json
 #### K8s configuration ####
 ## @section Kubernetes Parameters
 ## @param replicaCount Number of replicas to create (only 1 is supported)
@@ -156,7 +157,7 @@ additionalContainers: []
   #     - name: metrics
   #       containerPort: 9100
 
-    
+
 
 #### Factorio application configuration ####
 ## @section Factorio Parameters
@@ -532,7 +533,7 @@ map_gen_settings:
   - "x": 0
     "y": 0
   # Use null for a random seed, number for a specific seed.
-  seed: null
+  seed: 0
 
 ## @param map_settings.difficulty_settings.technology_price_multiplier Research cost multiplier
 ## @param map_settings.difficulty_settings.spoil_time_modifier

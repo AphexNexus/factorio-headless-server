@@ -9,7 +9,7 @@ gen-chart-doc:
 .PHONY: gen-schema
 gen-schema:
 	@echo "Generate helm schema json"
-	@helm schema-gen ./charts/factorio-server-charts/values.yaml > ./charts/factorio-server-charts/values.schema.json
+	@helm schema -c ./charts/factorio-server-charts
 
 .PHONY: verify
 verify: verify-gen
