@@ -16,7 +16,7 @@ keywords:
   - server
   - headless
 sources:
-  - https://github.com/justindesilets/factorio-server-charts
+  - https://github.com/aphexnexus/factorio-server-charts
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)

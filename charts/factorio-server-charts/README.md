@@ -5,12 +5,12 @@
 
 # factorio-server-charts
 
-[factorio-server-charts](https://github.com/justindesilets/factorio-server-charts) - A Helm chart for running factorio in kubernetes
+[factorio-server-charts](https://github.com/aphexnexus/factorio-server-charts) - A Helm chart for running factorio in kubernetes
 
 ## TL;DR;
 
 ```bash
-$ helm repo add factorio https://justindesilets.github.io/factorio-server-charts
+$ helm repo add factorio https://aphexnexus.github.io/factorio-server-charts
 $ helm repo update
 $ helm search repo factorio/factorio-server-charts
 $ helm upgrade -i factorio factorio/factorio-server-charts -n factorio --create-namespace
