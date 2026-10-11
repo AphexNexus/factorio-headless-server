@@ -36,7 +36,7 @@ data:
           /usr/local/bin/factorio-mod-downloader download official --name {{ .name | quote}} --destination $modDir --factorioVersion $FACTORIOVERSION --user $USERNAME --token $TOKEN --version {{ .version | quote}}
         fi
     {{- end }}
-    
+
     {{- range .Values.mods.unofficial }}
     /usr/local/bin/factorio-mod-downloader download unofficial --url {{ .url | quote}} --name {{ .name | quote}} --destination $modDir
     {{- end }}
@@ -44,7 +44,3 @@ data:
     # Mark the update as complete by creating the flag file
     touch "$FLAG_FILE"
     echo "Mod update completed."
-
-
-
-
