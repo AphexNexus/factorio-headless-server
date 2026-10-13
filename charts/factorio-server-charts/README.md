@@ -2,7 +2,7 @@
 
 # factorio-server-charts
 
-![Version: 2.5.4](https://img.shields.io/badge/Version-2.5.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 2.5.4](https://img.shields.io/badge/Version-2.5.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.77](https://img.shields.io/badge/AppVersion-2.0.77-informational?style=flat-square)
 
 <!-- Additional Custom Badges -->
 [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/factorio-server-charts)](https://artifacthub.io/packages/search?repo=factorio-server-charts)
@@ -159,67 +159,73 @@ The following table lists the configurable parameters of the `factorio` chart an
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| account.accountSecret | string | `""` |  |
-| account.password | string | `""` |  |
-| account.token | string | `""` |  |
-| account.username | string | `""` |  |
-| additionalContainers | list | `[]` |  |
-| admin_list | list | `[]` |  |
-| affinity | object | `{}` |  |
-| ban_list | list | `[]` |  |
-| factorioServer.enable_space_age | bool | `true` |  |
-| factorioServer.env | object | `{}` |  |
-| factorioServer.generate_new_save | bool | `true` |  |
-| factorioServer.load_latest_save | bool | `true` |  |
-| factorioServer.port | int | `31497` |  |
-| factorioServer.rcon_port | int | `27015` |  |
-| factorioServer.save_name | string | `"replaceMe"` |  |
-| factorioServer.update_mods_on_start | bool | `false` |  |
-| hostNetworkEnabled | bool | `true` |  |
-| image.pullPolicy | string | `"Always"` |  |
-| image.repository | string | `"factoriotools/factorio"` |  |
-| image.tag | string | `"latest"` |  |
-| import_save.enabled | bool | `true` |  |
-| import_save.reimport_every_time | bool | `false` |  |
-| import_save.reimport_on_change | bool | `false` |  |
-| import_save.source_url | string | `""` |  |
-| map_gen_settings.autoplace_controls | object | `{}` |  |
-| map_gen_settings.cliff_settings.cliff_elevation_0 | int | `10` |  |
-| map_gen_settings.cliff_settings.cliff_elevation_interval | int | `40` |  |
-| map_gen_settings.cliff_settings.name | string | `"cliff"` |  |
-| map_gen_settings.cliff_settings.richness | int | `1` |  |
-| map_gen_settings.height | int | `0` |  |
-| map_gen_settings.peaceful_mode | bool | `false` |  |
-| map_gen_settings.property_expression_names.control:aux:bias | string | `"0"` |  |
-| map_gen_settings.property_expression_names.control:aux:frequency | string | `"1"` |  |
-| map_gen_settings.property_expression_names.control:moisture:bias | string | `"0"` |  |
-| map_gen_settings.property_expression_names.control:moisture:frequency | string | `"1"` |  |
-| map_gen_settings.seed | int | `0` |  |
-| map_gen_settings.starting_area | int | `1` |  |
-| map_gen_settings.starting_points[0].x | int | `0` |  |
-| map_gen_settings.starting_points[0].y | int | `0` |  |
-| map_gen_settings.width | int | `0` |  |
-| map_settings.asteroids.max_ray_portals_expanded_per_tick | int | `100` |  |
-| map_settings.asteroids.spawning_rate | int | `1` |  |
-| map_settings.difficulty_settings.spoil_time_modifier | int | `1` |  |
-| map_settings.difficulty_settings.technology_price_multiplier | int | `1` |  |
-| map_settings.enemy_evolution.destroy_factor | float | `0.002` |  |
-| map_settings.enemy_evolution.enabled | bool | `true` |  |
-| map_settings.enemy_evolution.pollution_factor | float | `9e-7` |  |
-| map_settings.enemy_evolution.time_factor | float | `0.000004` |  |
+| account | object | `{"accountSecret":"","password":"","token":"","username":""}` | Account Parameters |
+| account.accountSecret | string | `""` | Existing k8s secret containing a valid factorio.com username and either a password or a token (or both) |
+| account.password | string | `""` | Your factorio.com password. Ignored if `account.accountSecret` is set |
+| account.token | string | `""` | Your factorio.com authentication token. May be used instead of password above. |
+| account.username | string | `""` | Your factorio.com username. Ignored if `account.accountSecret` is set |
+| additionalContainers | list | `[]` | Additional Containers |
+| admin_list | list | `[]` | Username Admin list |
+| affinity | object | `{}` | Affinity rules for pod assignment |
+| ban_list | list | `[]` | Username Ban List |
+| factorioServer | object | `{"enable_space_age":true,"env":{},"generate_new_save":true,"load_latest_save":true,"port":31497,"rcon_port":27015,"save_name":"replaceMe","update_mods_on_start":false}` | Factorio Server Parameters |
+| factorioServer.enable_space_age | bool | `true` | Enables or disables the mods for DLC Space Age in mod-list.json |
+| factorioServer.env | object | `{}` | Additional environment values for the Factorio Server container |
+| factorioServer.generate_new_save | bool | `true` | Generate a new save if `save_name` is not found |
+| factorioServer.load_latest_save | bool | `true` | Load latest save |
+| factorioServer.port | int | `31497` | Factorio Game Server port |
+| factorioServer.rcon_port | int | `27015` | Factorio Server RCON port |
+| factorioServer.save_name | string | `"replaceMe"` | Factorio save name |
+| factorioServer.update_mods_on_start | bool | `false` | Update mods on server start |
+| hostNetworkEnabled | bool | `true` | Sets the pod to run on the host network. This is required for the port-fixer to work properly, but it can be disabled if you don't need it. |
+| image.pullPolicy | string | `"Always"` | Factorio image pull policy |
+| image.repository | string | `"factoriotools/factorio"` | Factorio image repository |
+| image.tag | string | `"stable"` | Factorio image tag (immutable tags are recommended) Overrides the image tag whose default is the chart appVersion. |
+| import_save | object | `{"enabled":true,"reimport_every_time":false,"reimport_on_change":false,"source_url":""}` | Import Save Parameters |
+| import_save.enabled | bool | `true` | Enable save importer |
+| import_save.reimport_every_time | bool | `false` | Reimport from the source_url AND OVERWRITE PREVIOUS SAVE every time pod is initialized. good for demos or testing |
+| import_save.reimport_on_change | bool | `false` | Reimport from the source_url if the checksum of the file changes |
+| import_save.source_url | string | `""` | URL to download save from (http or https only). If no url is specified, saves can still be manually imported by placing the file in "/factorio/save-importer/import" |
+| map_gen_settings | object | `{"autoplace_controls":{},"cliff_settings":{"cliff_elevation_0":10,"cliff_elevation_interval":40,"name":"cliff","richness":1},"height":0,"peaceful_mode":false,"property_expression_names":{"control:aux:bias":"0","control:aux:frequency":"1","control:moisture:bias":"0","control:moisture:frequency":"1"},"seed":0,"starting_area":1,"starting_points":[{"x":0,"y":0}],"width":0}` | Map Generation Settings Parameters |
+| map_gen_settings.autoplace_controls | object | `{}` | Override default ore, trees and enemy bases frequency, size and richness. Leave empty for default values. Supports including modded ores |
+| map_gen_settings.cliff_settings | object | `{"cliff_elevation_0":10,"cliff_elevation_interval":40,"name":"cliff","richness":1}` | Override default cliff prototype name |
+| map_gen_settings.cliff_settings.cliff_elevation_0 | int | `10` | Override elevation of first row of cliffs |
+| map_gen_settings.cliff_settings.cliff_elevation_interval | int | `40` | Override elevation difference between successive rows of cliffs |
+| map_gen_settings.cliff_settings.name | string | `"cliff"` | Name of the cliff prototype |
+| map_gen_settings.cliff_settings.richness | int | `1` | Called cliff continuity in the map generator GUI. 0 will result in no cliffs, 10 will make all cliff rows completely solid |
+| map_gen_settings.height | int | `0` | Width and height of map, in tiles; 0 means infinite |
+| map_gen_settings.peaceful_mode | bool | `false` | Enable Peaceful mode |
+| map_gen_settings.property_expression_names | object | `{"control:aux:bias":"0","control:aux:frequency":"1","control:moisture:bias":"0","control:moisture:frequency":"1"}` | Overrides for property value generators (map type) |
+| map_gen_settings.property_expression_names.control:aux:bias | string | `"0"` | The terrain type bias in the map generator GUI |
+| map_gen_settings.property_expression_names.control:aux:frequency | string | `"1"` | The inverse of the terrain type scale in the map generator GUI |
+| map_gen_settings.property_expression_names.control:moisture:bias | string | `"0"` | The moisture bias in the map generator GUI |
+| map_gen_settings.property_expression_names.control:moisture:frequency | string | `"1"` | The inverse of the moisture scale in the map generator GUI |
+| map_gen_settings.seed | int | `0` | Use null for a random seed, number for a specific seed. |
+| map_gen_settings.starting_area | int | `1` | Multiplier for biter free zone radius |
+| map_gen_settings.starting_points | list | `[{"x":0,"y":0}]` | Starting point coordinates for the map. |
+| map_gen_settings.width | int | `0` | Width and height of map, in tiles; 0 means infinite |
+| map_settings.asteroids.max_ray_portals_expanded_per_tick | int | `100` | Controls the performance limit or expansion rate for ray portals/asteroid pathing calculations per game tick during space travel and asteroid belt generation |
+| map_settings.asteroids.spawning_rate | int | `1` | Asteroid Spawing rate |
+| map_settings.difficulty_settings.spoil_time_modifier | int | `1` | A value in range [0.01, 100] that modifies the time it takes for items to spoil. 1 is normal, 0.5 is half as long, 2 is twice as long, etc |
+| map_settings.difficulty_settings.technology_price_multiplier | int | `1` | Research cost multiplier |
+| map_settings.enemy_evolution | object | `{"destroy_factor":0.002,"enabled":true,"pollution_factor":9e-7,"time_factor":0.000004}` | These values represent a percentual increase in evolution. This means a value of 0.1 would increase evolution by 10%. |
+| map_settings.enemy_evolution.destroy_factor | float | `0.002` | The amount evolution naturally progresses by every second |
+| map_settings.enemy_evolution.enabled | bool | `true` | Whether enemy evolution is enabled at all |
+| map_settings.enemy_evolution.pollution_factor | float | `9e-7` | The amount evolution progresses for every unit of pollution |
+| map_settings.enemy_evolution.time_factor | float | `0.000004` | The amount evolution naturally progresses by every second |
 | map_settings.enemy_expansion.building_coefficient | float | `0.1` |  |
-| map_settings.enemy_expansion.enabled | bool | `true` |  |
-| map_settings.enemy_expansion.enemy_building_influence_radius | int | `2` |  |
-| map_settings.enemy_expansion.friendly_base_influence_radius | int | `2` |  |
+| map_settings.enemy_expansion.enabled | bool | `true` | Whether enemy expansion is enabled at all |
+| map_settings.enemy_expansion.enemy_building_influence_radius | int | `2` | The game checks a square region extending ${value} chunks out in all directions when calculating whether biters can expand into a new location |
+| map_settings.enemy_expansion.friendly_base_influence_radius | int | `2` | Distance in chunks from the furthest base around to prevent expansions from being too close to existing bases |
 | map_settings.enemy_expansion.max_colliding_tiles_coefficient | float | `0.9` |  |
-| map_settings.enemy_expansion.max_expansion_cooldown | int | `216000` |  |
-| map_settings.enemy_expansion.max_expansion_distance | int | `7` |  |
-| map_settings.enemy_expansion.min_expansion_cooldown | int | `14400` |  |
+| map_settings.enemy_expansion.max_expansion_cooldown | int | `216000` | The default maximum expansion cooldown (max_expansion_cooldown) is 216,000 ticks (1 hour) |
+| map_settings.enemy_expansion.max_expansion_distance | int | `7` | Distance in chunks from the furthest base around to prevent expansions from reaching too far into the player's territory |
+| map_settings.enemy_expansion.min_expansion_cooldown | int | `14400` | The default minimum expansion cooldown (min_expansion_cooldown) is 14,400 ticks (4 minutes) |
 | map_settings.enemy_expansion.neighbouring_base_chunk_coefficient | float | `0.4` |  |
 | map_settings.enemy_expansion.neighbouring_chunk_coefficient | float | `0.5` |  |
 | map_settings.enemy_expansion.other_base_coefficient | int | `2` |  |
-| map_settings.enemy_expansion.settler_group_max_size | int | `20` |  |
-| map_settings.enemy_expansion.settler_group_min_size | int | `5` |  |
+| map_settings.enemy_expansion.settler_group_max_size | int | `20` | The maximum size of a biter group sent out to create a new base |
+| map_settings.enemy_expansion.settler_group_min_size | int | `5` | The minimum number of biters/spitters required to form a group tasked with expanding and building a new enemy base |
 | map_settings.max_failed_behavior_count | int | `3` |  |
 | map_settings.path_finder.cache_accept_path_end_distance_ratio | float | `0.15` |  |
 | map_settings.path_finder.cache_accept_path_start_distance_ratio | float | `0.2` |  |
@@ -258,18 +264,18 @@ The following table lists the configurable parameters of the `factorio` chart an
 | map_settings.path_finder.stale_enemy_with_same_destination_collision_penalty | int | `30` |  |
 | map_settings.path_finder.start_to_goal_cost_multiplier_to_terminate_path_find | float | `2000` |  |
 | map_settings.path_finder.use_path_cache | bool | `true` |  |
-| map_settings.pollution.ageing | int | `1` |  |
-| map_settings.pollution.diffusion_ratio | float | `0.02` |  |
-| map_settings.pollution.enabled | bool | `true` |  |
-| map_settings.pollution.enemy_attack_pollution_consumption_modifier | int | `1` |  |
-| map_settings.pollution.expected_max_per_chunk | int | `150` |  |
-| map_settings.pollution.max_pollution_to_restore_trees | int | `20` |  |
-| map_settings.pollution.min_pollution_to_damage_trees | int | `60` |  |
-| map_settings.pollution.min_to_diffuse | int | `15` |  |
-| map_settings.pollution.min_to_show_per_chunk | int | `50` |  |
-| map_settings.pollution.pollution_per_tree_damage | int | `50` |  |
-| map_settings.pollution.pollution_restored_per_tree_damage | int | `10` |  |
-| map_settings.pollution.pollution_with_max_forest_damage | int | `150` |  |
+| map_settings.pollution | object | `{"ageing":1,"diffusion_ratio":0.02,"enabled":true,"enemy_attack_pollution_consumption_modifier":1,"expected_max_per_chunk":150,"max_pollution_to_restore_trees":20,"min_pollution_to_damage_trees":60,"min_to_diffuse":15,"min_to_show_per_chunk":50,"pollution_per_tree_damage":50,"pollution_restored_per_tree_damage":10,"pollution_with_max_forest_damage":150}` | These values are for the time frame of one second (60 ticks). |
+| map_settings.pollution.ageing | int | `1` | Pollution setting that controls how much pollution is naturally absorbed and cleaned up by terrain tiles per tick |
+| map_settings.pollution.diffusion_ratio | float | `0.02` | The amount of pollution diffused into neighboring chunks per second |
+| map_settings.pollution.enabled | bool | `true` | Enable pollution. |
+| map_settings.pollution.enemy_attack_pollution_consumption_modifier | int | `1` | Map generation setting that controls how much pollution an enemy spawner needs to absorb before adding a unit to an attack group |
+| map_settings.pollution.expected_max_per_chunk | int | `150` | The maximum expected pollution value that can be visualised inside a single chunk on the map |
+| map_settings.pollution.max_pollution_to_restore_trees | int | `20` | Hidden map setting dictates the environmental threshold required for damaged trees to naturally recover |
+| map_settings.pollution.min_pollution_to_damage_trees | int | `60` | Map prototype setting that defines the minimum pollution threshold required in a single chunk before trees can begin taking environmental damage |
+| map_settings.pollution.min_to_diffuse | int | `15` | Map setting that defines the minimum amount of pollution (measured in Pollution Units, or PUs) required on a chunk before it starts spreading to neighboring chunks |
+| map_settings.pollution.min_to_show_per_chunk | int | `50` | Map configuration variable within the PollutionMapSettings that dictates the minimum visual threshold for pollution rendering on the map |
+| map_settings.pollution.pollution_per_tree_damage | int | `50` | Tree damage from pollution is calculated based on how much pollution is in a chunk above the minimum threshold of 60 units |
+| map_settings.pollution.pollution_with_max_forest_damage | int | `150` | Pollution threshold inside a single 32x32 chunk at which the probability for trees to receive environmental damage maxes out |
 | map_settings.steering.default.force_unit_fuzzy_goto_behavior | bool | `false` |  |
 | map_settings.steering.default.radius | float | `1.2` |  |
 | map_settings.steering.default.separation_factor | float | `1.2` |  |
@@ -278,38 +284,36 @@ The following table lists the configurable parameters of the `factorio` chart an
 | map_settings.steering.moving.radius | int | `3` |  |
 | map_settings.steering.moving.separation_factor | int | `3` |  |
 | map_settings.steering.moving.separation_force | float | `0.01` |  |
-| map_settings.unit_group.max_gathering_unit_groups | int | `30` |  |
-| map_settings.unit_group.max_group_gathering_time | int | `36000` |  |
-| map_settings.unit_group.max_group_member_fallback_factor | int | `3` |  |
-| map_settings.unit_group.max_group_radius | int | `30` |  |
-| map_settings.unit_group.max_group_slowdown_factor | float | `0.3` |  |
-| map_settings.unit_group.max_member_slowdown_when_ahead | float | `0.6` |  |
-| map_settings.unit_group.max_member_speedup_when_behind | float | `1.4` |  |
-| map_settings.unit_group.max_unit_group_size | int | `200` |  |
-| map_settings.unit_group.max_wait_time_for_late_members | int | `7200` |  |
-| map_settings.unit_group.member_disown_distance | int | `10` |  |
-| map_settings.unit_group.min_group_gathering_time | int | `3600` |  |
-| map_settings.unit_group.min_group_radius | int | `5` |  |
-| map_settings.unit_group.tick_tolerance_when_member_arrives | int | `60` |  |
-| mods.enabled | bool | `false` |  |
-| mods.image.pullPolicy | string | `"Always"` |  |
-| mods.image.repository | string | `"ghcr.io/sqljames/factorio-mod-downloader"` |  |
-| mods.image.tag | string | `"1.0.1"` |  |
-| mods.portal | list | `[]` |  |
-| mods.unofficial | list | `[]` |  |
-| nodeSelector | object | `{}` |  |
-| persistence.annotations | object | `{}` |  |
-| persistence.dataDir.Size | string | `"1Gi"` |  |
-| persistence.enabled | bool | `true` |  |
-| persistence.labels | object | `{}` |  |
-| persistence.storageClassName | string | `""` |  |
-| podSecurityContext.runAsGroup | int | `845` |  |
-| podSecurityContext.runAsUser | int | `845` |  |
-| port_fixer.enabled | bool | `false` |  |
-| port_fixer.image.pullPolicy | string | `"Always"` |  |
-| port_fixer.image.repository | string | `"ghcr.io/zcube/factorio-port-fixer"` |  |
-| port_fixer.image.tag | string | `"latest"` |  |
-| port_fixer.port | string | `""` |  |
+| map_settings.unit_group.max_gathering_unit_groups | int | `30` | A map setting that defines the maximum number of automatically created unit groups gathering for an attack at any time |
+| map_settings.unit_group.max_group_gathering_time | int | `36000` | The maximum time (measured in game ticks) that a pollution-triggered biters/spitters attack group waits and gathers before marching toward a target |
+| map_settings.unit_group.max_group_member_fallback_factor | int | `3` | A unit group setting that controls when a lagging biter or spitter forces the entire attack group to slow down |
+| map_settings.unit_group.max_group_radius | int | `30` | The maximum spatial limit for an enemy unit attack group |
+| map_settings.unit_group.max_group_slowdown_factor | float | `0.3` | A map and unit group setting that controls how much an entire enemy group slows down when members fall too far behind |
+| map_settings.unit_group.max_member_slowdown_when_ahead | float | `0.6` | A dynamic map and prototype property used to manage biter behavior within an attack group |
+| map_settings.unit_group.max_member_speedup_when_behind | float | `1.4` | A dynamic map and prototype property used to manage biter behavior within an attack group |
+| map_settings.unit_group.max_unit_group_size | int | `200` | The maximum number of enemy biters or spitters that can gather into a single automatically created attack group (swarm) |
+| map_settings.unit_group.max_wait_time_for_late_members | int | `7200` | A unit_group parameter that controls how long (measured in game ticks) an enemy attack or expansion group waits for stragglers after it finishes gathering |
+| map_settings.unit_group.member_disown_distance | int | `10` | A engine setting that dictates how enemy biter groups behave when a member falls behind during movement |
+| map_settings.unit_group.min_group_gathering_time | int | `3600` | The minimum time (measured in game ticks) that a pollution-triggered biters/spitters attack group waits and gathers before marching toward a target |
+| map_settings.unit_group.min_group_radius | int | `5` | The minimum spatial limit for an enemy unit attack group |
+| map_settings.unit_group.tick_tolerance_when_member_arrives | int | `60` | A map setting that determines how many ticks a unit group (like a biter attack squad) will wait after a lagging biter catches up before the group resumes moving. |
+| mods | object | `{"enabled":false,"image":{"pullPolicy":"Always","repository":"ghcr.io/sqljames/factorio-mod-downloader","tag":"1.0.1"},"portal":[],"unofficial":[]}` | Mods Parameters |
+| mods.enabled | bool | `false` | Enable mods |
+| mods.portal | list | `[]` | List of official mods to be downloaded from Factorio Mod Portal |
+| mods.unofficial | list | `[]` | List of unofficial mods name and url to download into the mods folder |
+| nodeSelector | object | `{}` | nodeSelector Node labels for pod assignment |
+| persistence.annotations | object | `{}` | If you have annotations to spin up a PV i.e. the location. Remove the curly braces |
+| persistence.dataDir.Size | string | `"1Gi"` | Size of the Persistent Volume Claim |
+| persistence.enabled | bool | `true` | Enable persistence using Persistent Volume Claims |
+| persistence.labels | object | `{}` | If you have additional labels to apply to the volume |
+| persistence.storageClassName | string | `""` | If you like to use a specific storageClassName, set the name. Leave it blank for the default class |
+| podSecurityContext | object | `{"runAsGroup":845,"runAsUser":845}` | See Factorio Tools [Dockerfile](https://github.com/factoriotools/factorio-docker/blob/master/docker/Dockerfile) |
+| port_fixer | object | `{"enabled":false,"image":{"pullPolicy":"Always","repository":"ghcr.io/zcube/factorio-port-fixer","tag":"latest"},"port":""}` | Port Fixer Parameters |
+| port_fixer.enabled | bool | `false` | Enable the Factorio Port Fixer |
+| port_fixer.image.pullPolicy | string | `"Always"` | Factorio port fixer image pull policy |
+| port_fixer.image.repository | string | `"ghcr.io/zcube/factorio-port-fixer"` | Factorio port-fixer image repository |
+| port_fixer.image.tag | string | `"latest"` | Factorio port fixer image tag (immutable tags are recommended) |
+| port_fixer.port | int | `""` | Factorio port to announce via port-fixer, defaults to service.port |
 | rcon.external | bool | `true` |  |
 | rcon.ipFamilies[0] | string | `"IPv4"` |  |
 | rcon.ipFamilyPolicy | string | `"SingleStack"` |  |
@@ -318,64 +322,63 @@ The following table lists the configurable parameters of the `factorio` chart an
 | rcon.port | int | `30100` |  |
 | rcon.serviceAnnotations | object | `{}` |  |
 | rcon.type | string | `"LoadBalancer"` |  |
-| rconAPI.enabled | bool | `false` |  |
-| rconAPI.grpcPort | int | `30111` |  |
-| rconAPI.httpPort | int | `30110` |  |
-| rconAPI.image.pullPolicy | string | `"Always"` |  |
-| rconAPI.image.repository | string | `"ghcr.io/nekomeowww/factorio-rcon-api"` |  |
-| rconAPI.image.tag | string | `"latest"` |  |
-| rconAPI.ingress.annotations."nginx.ingress.kubernetes.io/backend-protocol" | string | `"GRPC"` |  |
-| rconAPI.ingress.annotations."nginx.ingress.kubernetes.io/ssl-redirect" | string | `"true"` |  |
-| rconAPI.ingress.className | string | `"nginx"` |  |
-| rconAPI.ingress.enabled | bool | `true` |  |
-| rconAPI.ingress.hostname | string | `"factorio.example.com"` |  |
-| rconAPI.ingress.tls.enabled | bool | `false` |  |
-| rconAPI.ingress.tls.secretName | string | `"cert-factorio.example.com"` |  |
-| rconAPI.ipFamilies[0] | string | `"IPv4"` |  |
-| rconAPI.ipFamilyPolicy | string | `"SingleStack"` |  |
-| rconAPI.serviceAnnotations | object | `{}` |  |
-| rconAPI.type | string | `"ClusterIP"` |  |
-| replicaCount | int | `1` |  |
-| resources.limits | object | `{}` |  |
-| resources.requests.cpu | string | `"500m"` |  |
-| resources.requests.memory | string | `"512Mi"` |  |
-| securityContext.fsGroup | int | `845` |  |
-| serverPassword.game_password | string | `""` |  |
-| serverPassword.passwordSecret | string | `""` |  |
-| server_settings.afk_autokick_interval | int | `0` |  |
-| server_settings.allow_commands | string | `"admins-only"` |  |
-| server_settings.auto_pause | bool | `true` |  |
-| server_settings.auto_pause_when_players_connect | bool | `false` |  |
-| server_settings.autosave_interval | int | `10` |  |
-| server_settings.autosave_only_on_server | bool | `true` |  |
-| server_settings.autosave_slots | int | `5` |  |
-| server_settings.description | string | `"Factorio running on Kubernetes"` |  |
-| server_settings.ignore_player_limit_for_returning_players | bool | `false` |  |
-| server_settings.max_heartbeats_per_second | int | `60` |  |
-| server_settings.max_players | int | `0` |  |
-| server_settings.max_upload_in_kilobytes_per_second | int | `0` |  |
-| server_settings.max_upload_slots | int | `5` |  |
-| server_settings.maximum_segment_size | int | `100` |  |
-| server_settings.maximum_segment_size_peer_count | int | `10` |  |
-| server_settings.minimum_latency_in_ticks | int | `0` |  |
-| server_settings.minimum_segment_size | int | `25` |  |
-| server_settings.minimum_segment_size_peer_count | int | `20` |  |
-| server_settings.name | string | `"Factorio"` |  |
-| server_settings.non_blocking_saving | bool | `false` |  |
-| server_settings.only_admins_can_pause_the_game | bool | `true` |  |
-| server_settings.require_user_verification | bool | `false` |  |
-| server_settings.tags[0] | string | `"game"` |  |
-| server_settings.tags[1] | string | `"tags"` |  |
-| server_settings.visibility.lan | bool | `true` |  |
-| server_settings.visibility.public | bool | `false` |  |
-| service.annotations | object | `{}` |  |
+| rconAPI | object | `{"enabled":false,"grpcPort":30111,"httpPort":30110,"image":{"pullPolicy":"Always","repository":"ghcr.io/nekomeowww/factorio-rcon-api","tag":"latest"},"ingress":{"annotations":{"nginx.ingress.kubernetes.io/backend-protocol":"GRPC","nginx.ingress.kubernetes.io/ssl-redirect":"true"},"className":"nginx","enabled":true,"hostname":"factorio.example.com","tls":{"enabled":false,"secretName":"cert-factorio.example.com"}},"ipFamilies":["IPv4"],"ipFamilyPolicy":"SingleStack","serviceAnnotations":{},"type":"ClusterIP"}` | RCON API Parameters |
+| rconAPI.enabled | bool | `false` | Enable or disable the RCON API service |
+| rconAPI.grpcPort | int | `30111` | Internal port on which the gRPC API for RCON is exposed |
+| rconAPI.httpPort | int | `30110` | Internal port on which the HTTP API for RCON is exposed |
+| rconAPI.image | object | `{"pullPolicy":"Always","repository":"ghcr.io/nekomeowww/factorio-rcon-api","tag":"latest"}` | RCON API container image configuration |
+| rconAPI.image.pullPolicy | string | `"Always"` | RCON-API image pull policy |
+| rconAPI.image.repository | string | `"ghcr.io/nekomeowww/factorio-rcon-api"` | RCON-API image repository |
+| rconAPI.image.tag | string | `"latest"` | RCON-API image tag (immutable tags are recommended) |
+| rconAPI.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/backend-protocol":"GRPC","nginx.ingress.kubernetes.io/ssl-redirect":"true"}` | Additional annotations for the Ingress resource |
+| rconAPI.ingress.className | string | `"nginx"` | Ingress class name for selecting the Ingress controller (e.g., nginx, cilium) |
+| rconAPI.ingress.enabled | bool | `true` | Enable or disable the Ingress for the RCON API service |
+| rconAPI.ingress.hostname | string | `"factorio.example.com"` | Hostname for the RCON API Ingress |
+| rconAPI.ingress.tls.enabled | bool | `false` | Enable or disable TLS for the Ingress |
+| rconAPI.ingress.tls.secretName | string | `"cert-factorio.example.com"` | Kubernetes Secret name for TLS certificates used by the Ingress |
+| rconAPI.ipFamilies | list | `["IPv4"]` | List of IP families (e.g., IPv4, IPv6) assigned to the RCON API service. This field is usually assigned automatically based on cluster configuration and the ipFamilyPolicy field. |
+| rconAPI.ipFamilyPolicy | string | `"SingleStack"` | Determines how cluster IPs are allocated for the RCON API service. Possible values are SingleStack, PreferDualStack, or RequireDualStack. |
+| rconAPI.serviceAnnotations | object | `{}` | Annotations to add to the RCON API service |
+| rconAPI.type | string | `"ClusterIP"` | Kubernetes service type for the RCON API (e.g., ClusterIP, NodePort, LoadBalancer) |
+| replicaCount | int | `1` | replicaCount Number of replicas to create (only 1 is supported) |
+| resources.limits | object | `{}` | If you like to limit Factorio resources |
+| resources.requests.cpu | string | `"500m"` | The requested cpu for the Factorio containers |
+| resources.requests.memory | string | `"512Mi"` | The requested memory for the Factorio containers |
+| securityContext | object | `{"fsGroup":845}` | Useful for fixing file permissions. See official [docs](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/). |
+| serverPassword | object | `{"game_password":"","passwordSecret":""}` | Factorio Server Password Parameters |
+| serverPassword.game_password | string | `""` | Password required to log into the factorio server. Ignored if `serverPassword.passwordSecret` is set |
+| serverPassword.passwordSecret | string | `""` | Existing k8s Secret containing a `game_password` data entry |
+| server_settings | object | `{"afk_autokick_interval":0,"allow_commands":"admins-only","auto_pause":true,"auto_pause_when_players_connect":false,"autosave_interval":10,"autosave_only_on_server":true,"autosave_slots":5,"description":"Factorio running on Kubernetes","ignore_player_limit_for_returning_players":false,"max_heartbeats_per_second":60,"max_players":0,"max_upload_in_kilobytes_per_second":0,"max_upload_slots":5,"maximum_segment_size":100,"maximum_segment_size_peer_count":10,"minimum_latency_in_ticks":0,"minimum_segment_size":25,"minimum_segment_size_peer_count":20,"name":"Factorio","non_blocking_saving":false,"only_admins_can_pause_the_game":true,"require_user_verification":false,"tags":["game","tags"],"visibility":{"lan":true,"public":false}}` | Server Settings Parameters |
+| server_settings.afk_autokick_interval | int | `0` | How many minutes until someone is kicked when doing nothing, 0 for never. |
+| server_settings.allow_commands | string | `"admins-only"` | possible values are, true, false and admins-only |
+| server_settings.auto_pause | bool | `true` | Whether should the server be paused when no players are present. |
+| server_settings.auto_pause_when_players_connect | bool | `false` | Whether should the server be paused when someone is connecting to the server. |
+| server_settings.autosave_interval | int | `10` | Autosave interval in minutes |
+| server_settings.autosave_only_on_server | bool | `true` | Whether autosaves should be saved only on server or also on all connected clients. Default is true. |
+| server_settings.autosave_slots | int | `5` | server autosave slots, it is cycled through when the server autosaves. |
+| server_settings.description | string | `"Factorio running on Kubernetes"` | Description of the game that will appear in the listing |
+| server_settings.ignore_player_limit_for_returning_players | bool | `false` | Players that played on this map already can join even when the max player limit was reached. |
+| server_settings.max_heartbeats_per_second | int | `60` | Network tick rate. Maximum rate game updates packets are sent at before bundling them together. Minimum value is 6, maximum value is 240. |
+| server_settings.max_upload_in_kilobytes_per_second | int | `0` | optional, default value is 0. 0 means unlimited. |
+| server_settings.max_upload_slots | int | `5` | optional, default value is 5. 0 means unlimited. |
+| server_settings.minimum_latency_in_ticks | int | `0` | optional one tick is 16ms in default speed, default value is 0. 0 means no minimum. |
+| server_settings.name | string | `"Factorio"` | Name of the game as it will appear in the game listing |
+| server_settings.non_blocking_saving | bool | `false` | Highly experimental feature, enable only at your own risk of losing your saves. On UNIX systems, server will fork itself to create an autosave. Autosaving on connected Windows clients will be disabled regardless of autosave_only_on_server option. |
+| server_settings.only_admins_can_pause_the_game | bool | `true` | specifies if anyone can pause or only admins |
+| server_settings.require_user_verification | bool | `false` | When set to true, the server will only allow clients that have a valid Factorio.com account |
+| server_settings.tags | list | `["game","tags"]` | Tags for the game that will appear in the listing |
+| server_settings.visibility | object | `{"lan":true,"public":false}` | Game visibility parameters. See Factorio documentation for more details: https://wiki.factorio.com/Multiplayer#How_to_list_a_server-hosted_game_on_the_matching_server |
+| server_settings.visibility.lan | bool | `true` | Game will be broadcast on LAN |
+| server_settings.visibility.public | bool | `false` | Game will be published on the official Factorio matching server |
+| service.annotations | object | `{}` | Additional custom annotations for Factorio service |
 | service.ipFamilies[0] | string | `"IPv4"` |  |
 | service.ipFamilyPolicy | string | `"SingleStack"` |  |
-| service.port | int | `31497` |  |
-| service.type | string | `"NodePort"` |  |
-| strategy.type | string | `"Recreate"` |  |
-| tolerations | list | `[]` |  |
-| white_list | list | `[]` |  |
+| service.port | int | `31497` | Factorio service port |
+| service.type | string | `"NodePort"` | Factorio service type. If you use "type: NodePort" set the port to a value you like in the range of 30000-32767. Leave it blank for a random port |
+| strategy | object | `{"type":"Recreate"}` | Strategy Parameters |
+| strategy.type | string | `"Recreate"` | Strategy used to replace old pods |
+| tolerations | list | `[]` | Tolerations for pod assignment |
+| white_list | list | `[]` | Username Whitelist |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm upgrade -i`. For example:
 

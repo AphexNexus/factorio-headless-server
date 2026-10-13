@@ -31,7 +31,7 @@ maintainers:
   - name: Justin Desilets
     email: justin.desilets@gmail.com
     url: https://github.com/justindesilets
-appVersion: 1.0.0
+appVersion: 2.0.77
 deprecated: false
 
 icon: https://factorio.com/static/img/factorio-wheel.png
