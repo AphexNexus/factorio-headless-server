@@ -1,0 +1,1868 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "account": {
+      "additionalProperties": false,
+      "description": "#\n#\n#\n#",
+      "properties": {
+        "accountSecret": {
+          "default": "",
+          "description": "Existing secret containing a valid factorio.com username and either a password or a token\nExample:\n\napiVersion: v1\nkind: Secret\nmetadata:\n  name: account-secret\ndata:\n  username: \u003cusername in base64\u003e\n  password: \u003cpassword in base64\u003e\n\naccountSecret: account-secret",
+          "title": "accountSecret",
+          "type": "string"
+        },
+        "password": {
+          "default": "",
+          "title": "password",
+          "type": "string"
+        },
+        "token": {
+          "default": "",
+          "description": "Authentication token. May be used instead of password above.",
+          "title": "token",
+          "type": "string"
+        },
+        "username": {
+          "default": "",
+          "description": "Your factorio.com login credentials. Required for games with visibility public",
+          "title": "username",
+          "type": "string"
+        }
+      },
+      "required": [
+        "accountSecret",
+        "username",
+        "password",
+        "token"
+      ],
+      "title": "account",
+      "type": "object"
+    },
+    "additionalContainers": {
+      "description": "### Additional containers ####\n##\nSpecify any additional sidecar containers for the deployment here, such as log or metric collectors.\nSee https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#container-v1-core for the full Container\nreference.",
+      "items": {
+        "required": []
+      },
+      "title": "additionalContainers",
+      "type": "array"
+    },
+    "admin_list": {
+      "description": "#\n#\n#",
+      "items": {
+        "required": []
+      },
+      "title": "admin_list",
+      "type": "array"
+    },
+    "affinity": {
+      "additionalProperties": false,
+      "description": "Affinity rules for pod assignment",
+      "required": [],
+      "title": "affinity",
+      "type": "object"
+    },
+    "ban_list": {
+      "items": {
+        "required": []
+      },
+      "title": "ban_list",
+      "type": "array"
+    },
+    "factorioServer": {
+      "additionalProperties": false,
+      "description": "#\n#\n#\n#\n#\n#\n#",
+      "properties": {
+        "enable_space_age": {
+          "default": true,
+          "description": "enables or disables the mods for DLC Space Age in mod-list.json",
+          "title": "enable_space_age",
+          "type": "boolean"
+        },
+        "env": {
+          "additionalProperties": false,
+          "description": "adding addtional environment variables to the factorio server container",
+          "required": [],
+          "title": "env",
+          "type": "object"
+        },
+        "generate_new_save": {
+          "default": true,
+          "description": "generate a new save if one does not exist before starting the server",
+          "title": "generate_new_save",
+          "type": "boolean"
+        },
+        "load_latest_save": {
+          "default": true,
+          "description": "load latest when true. Otherwise load SAVE_NAME",
+          "title": "load_latest_save",
+          "type": "boolean"
+        },
+        "port": {
+          "default": 31497,
+          "description": "factorio game server port\nthe default game port (34197) has been changed to 31497 to resolve issues when using the port-fixer.\nthis port setting is typically for internal Kubernetes configuration only, and in most cases, it does not need to be modified.\nif it is necessary to change the game server port where you connect to the game, update the \"service.port\" value accordingly.",
+          "title": "port",
+          "type": "integer"
+        },
+        "rcon_port": {
+          "default": 27015,
+          "description": "factorio game rcon port\nthis port setting is typically for internal Kubernetes configuration only, and in most cases, it does not need to be modified.\nif it is necessary to change the rcon server port where you connect to it, update the \"rcon.port\" value accordingly.",
+          "title": "rcon_port",
+          "type": "integer"
+        },
+        "save_name": {
+          "default": "replaceMe",
+          "description": "name to use for the save file",
+          "title": "save_name",
+          "type": "string"
+        },
+        "update_mods_on_start": {
+          "default": false,
+          "description": "if mods should be updated before starting the server",
+          "title": "update_mods_on_start",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "save_name",
+        "generate_new_save",
+        "update_mods_on_start",
+        "load_latest_save",
+        "enable_space_age",
+        "port",
+        "rcon_port",
+        "env"
+      ],
+      "title": "factorioServer",
+      "type": "object"
+    },
+    "global": {
+      "description": "Global values are values that can be accessed from any chart or subchart by exactly the same name.",
+      "required": [],
+      "title": "global",
+      "type": "object"
+    },
+    "hostNetworkEnabled": {
+      "default": true,
+      "title": "hostNetworkEnabled",
+      "type": "boolean"
+    },
+    "image": {
+      "additionalProperties": false,
+      "description": "### Image Configuration ####\n#\n#\n#\n#",
+      "properties": {
+        "pullPolicy": {
+          "default": "Always",
+          "description": "# Container image pull policy",
+          "title": "pullPolicy",
+          "type": "string"
+        },
+        "repository": {
+          "default": "factoriotools/factorio",
+          "title": "repository",
+          "type": "string"
+        },
+        "tag": {
+          "default": "latest",
+          "description": "# Overrides the image tag whose default is the chart appVersion.",
+          "title": "tag",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "pullPolicy",
+        "tag"
+      ],
+      "title": "image",
+      "type": "object"
+    },
+    "import_save": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "enable save importer",
+          "title": "enabled",
+          "type": "boolean"
+        },
+        "reimport_every_time": {
+          "default": false,
+          "description": "reimport from the source_url AND OVERWRITE PREVIOUS SAVE every time pod is initialized. good for demos or testing",
+          "title": "reimport_every_time",
+          "type": "boolean"
+        },
+        "reimport_on_change": {
+          "default": false,
+          "description": "reimport from the source_url if the checksum of the file changes",
+          "title": "reimport_on_change",
+          "type": "boolean"
+        },
+        "source_url": {
+          "default": "",
+          "description": "url to download save from (http or https only).\nif no url is specified, saves can still be manually imported by placing the file in \"/factorio/save-importer/import\"",
+          "title": "source_url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "enabled",
+        "source_url",
+        "reimport_on_change",
+        "reimport_every_time"
+      ],
+      "title": "import_save",
+      "type": "object"
+    },
+    "map_gen_settings": {
+      "additionalProperties": false,
+      "description": "#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#",
+      "properties": {
+        "autoplace_controls": {
+          "additionalProperties": false,
+          "required": [],
+          "title": "autoplace_controls",
+          "type": "object"
+        },
+        "cliff_settings": {
+          "additionalProperties": false,
+          "description": "   water:\n     frequency: 1\n     size: 1\n   coal:\n     frequency: 1\n     size: 1\n     richness: 1\n   stone:\n     frequency: 1\n     size: 1\n     richness: 1\n   copper-ore:\n     frequency: 1\n     size: 1\n     richness: 1\n   iron-ore:\n     frequency: 1\n     size: 1\n     richness: 1\n   uranium-ore:\n     frequency: 1\n     size: 1\n     richness: 1\n   crude-oil:\n     frequency: 1\n     size: 1\n     richness: 1\n   trees:\n     frequency: 1\n     size: 1\n   enemy-base:\n     frequency: 1\n     size: 1",
+          "properties": {
+            "cliff_elevation_0": {
+              "default": 10,
+              "description": "Elevation of first row of cliffs",
+              "title": "cliff_elevation_0",
+              "type": "integer"
+            },
+            "cliff_elevation_interval": {
+              "default": 40,
+              "description": "Elevation difference between successive rows of cliffs.\nThis is inversely proportional to frequency in the map generation GUI. Specifically, when set from the GUI the value is 40 / frequency.",
+              "title": "cliff_elevation_interval",
+              "type": "integer"
+            },
+            "name": {
+              "default": "cliff",
+              "description": "Name of the cliff prototype",
+              "title": "name",
+              "type": "string"
+            },
+            "richness": {
+              "default": 1,
+              "description": "Called cliff continuity in the map generator GUI. 0 will result in no cliffs, 10 will make all cliff rows completely solid",
+              "title": "richness",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "name",
+            "cliff_elevation_0",
+            "cliff_elevation_interval",
+            "richness"
+          ],
+          "title": "cliff_settings",
+          "type": "object"
+        },
+        "height": {
+          "default": 0,
+          "description": "Width and height of map, in tiles; 0 means infinite",
+          "title": "height",
+          "type": "integer"
+        },
+        "peaceful_mode": {
+          "default": false,
+          "title": "peaceful_mode",
+          "type": "boolean"
+        },
+        "property_expression_names": {
+          "additionalProperties": false,
+          "description": "Overrides for property value generators (map type)\nLeave elevation blank to get normal terrain.\nUse 'elevation': 'elevation_island' to get an island.\nMoisture and terrain type are also controlled via this.\n\"control:moisture:frequency is the inverse of the moisture scale in the map generator GUI.\"\n\"control:moisture:bias is the moisture bias in the map generator GUI.\"\n\"control:aux:frequency is the inverse of the terrain type scale in the map generator GUI.\"\n\"control:aux:bias is the teraain type bias in the map generator GUI.\"",
+          "properties": {
+            "control:aux:bias": {
+              "default": "0",
+              "title": "control:aux:bias",
+              "type": "string"
+            },
+            "control:aux:frequency": {
+              "default": "1",
+              "title": "control:aux:frequency",
+              "type": "string"
+            },
+            "control:moisture:bias": {
+              "default": "0",
+              "title": "control:moisture:bias",
+              "type": "string"
+            },
+            "control:moisture:frequency": {
+              "default": "1",
+              "title": "control:moisture:frequency",
+              "type": "string"
+            }
+          },
+          "required": [
+            "control:moisture:frequency",
+            "control:moisture:bias",
+            "control:aux:frequency",
+            "control:aux:bias"
+          ],
+          "title": "property_expression_names",
+          "type": "object"
+        },
+        "seed": {
+          "default": 0,
+          "description": "Use null for a random seed, number for a specific seed.",
+          "title": "seed",
+          "type": "integer"
+        },
+        "starting_area": {
+          "default": 1,
+          "description": "Multiplier for biter free zone radius",
+          "title": "starting_area",
+          "type": "integer"
+        },
+        "starting_points": {
+          "items": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "x": {
+                    "default": 0,
+                    "title": "x",
+                    "type": "integer"
+                  },
+                  "y": {
+                    "default": 0,
+                    "title": "y",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "type": "object"
+              }
+            ],
+            "required": []
+          },
+          "title": "starting_points",
+          "type": "array"
+        },
+        "width": {
+          "default": 0,
+          "description": "Width and height of map, in tiles; 0 means infinite",
+          "title": "width",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "width",
+        "height",
+        "starting_area",
+        "peaceful_mode",
+        "autoplace_controls",
+        "cliff_settings",
+        "property_expression_names",
+        "starting_points",
+        "seed"
+      ],
+      "title": "map_gen_settings",
+      "type": "object"
+    },
+    "map_settings": {
+      "additionalProperties": false,
+      "description": "#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#",
+      "properties": {
+        "asteroids": {
+          "additionalProperties": false,
+          "properties": {
+            "max_ray_portals_expanded_per_tick": {
+              "default": 100,
+              "title": "max_ray_portals_expanded_per_tick",
+              "type": "integer"
+            },
+            "spawning_rate": {
+              "default": 1,
+              "title": "spawning_rate",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "max_ray_portals_expanded_per_tick",
+            "spawning_rate"
+          ],
+          "title": "asteroids",
+          "type": "object"
+        },
+        "difficulty_settings": {
+          "additionalProperties": false,
+          "properties": {
+            "spoil_time_modifier": {
+              "default": 1,
+              "title": "spoil_time_modifier",
+              "type": "integer"
+            },
+            "technology_price_multiplier": {
+              "default": 1,
+              "title": "technology_price_multiplier",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "technology_price_multiplier",
+            "spoil_time_modifier"
+          ],
+          "title": "difficulty_settings",
+          "type": "object"
+        },
+        "enemy_evolution": {
+          "additionalProperties": false,
+          "properties": {
+            "destroy_factor": {
+              "default": 0.002,
+              "title": "destroy_factor",
+              "type": "number"
+            },
+            "enabled": {
+              "default": true,
+              "title": "enabled",
+              "type": "boolean"
+            },
+            "pollution_factor": {
+              "default": 9e-7,
+              "title": "pollution_factor",
+              "type": "number"
+            },
+            "time_factor": {
+              "default": 0.000004,
+              "title": "time_factor",
+              "type": "number"
+            }
+          },
+          "required": [
+            "enabled",
+            "time_factor",
+            "destroy_factor",
+            "pollution_factor"
+          ],
+          "title": "enemy_evolution",
+          "type": "object"
+        },
+        "enemy_expansion": {
+          "additionalProperties": false,
+          "properties": {
+            "building_coefficient": {
+              "default": 0.1,
+              "title": "building_coefficient",
+              "type": "number"
+            },
+            "enabled": {
+              "default": true,
+              "title": "enabled",
+              "type": "boolean"
+            },
+            "enemy_building_influence_radius": {
+              "default": 2,
+              "title": "enemy_building_influence_radius",
+              "type": "integer"
+            },
+            "friendly_base_influence_radius": {
+              "default": 2,
+              "title": "friendly_base_influence_radius",
+              "type": "integer"
+            },
+            "max_colliding_tiles_coefficient": {
+              "default": 0.9,
+              "title": "max_colliding_tiles_coefficient",
+              "type": "number"
+            },
+            "max_expansion_cooldown": {
+              "default": 216000,
+              "title": "max_expansion_cooldown",
+              "type": "integer"
+            },
+            "max_expansion_distance": {
+              "default": 7,
+              "title": "max_expansion_distance",
+              "type": "integer"
+            },
+            "min_expansion_cooldown": {
+              "default": 14400,
+              "title": "min_expansion_cooldown",
+              "type": "integer"
+            },
+            "neighbouring_base_chunk_coefficient": {
+              "default": 0.4,
+              "title": "neighbouring_base_chunk_coefficient",
+              "type": "number"
+            },
+            "neighbouring_chunk_coefficient": {
+              "default": 0.5,
+              "title": "neighbouring_chunk_coefficient",
+              "type": "number"
+            },
+            "other_base_coefficient": {
+              "default": 2,
+              "title": "other_base_coefficient",
+              "type": "integer"
+            },
+            "settler_group_max_size": {
+              "default": 20,
+              "title": "settler_group_max_size",
+              "type": "integer"
+            },
+            "settler_group_min_size": {
+              "default": 5,
+              "title": "settler_group_min_size",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "enabled",
+            "max_expansion_distance",
+            "friendly_base_influence_radius",
+            "enemy_building_influence_radius",
+            "building_coefficient",
+            "other_base_coefficient",
+            "neighbouring_chunk_coefficient",
+            "neighbouring_base_chunk_coefficient",
+            "max_colliding_tiles_coefficient",
+            "settler_group_min_size",
+            "settler_group_max_size",
+            "min_expansion_cooldown",
+            "max_expansion_cooldown"
+          ],
+          "title": "enemy_expansion",
+          "type": "object"
+        },
+        "max_failed_behavior_count": {
+          "default": 3,
+          "title": "max_failed_behavior_count",
+          "type": "integer"
+        },
+        "path_finder": {
+          "additionalProperties": false,
+          "properties": {
+            "cache_accept_path_end_distance_ratio": {
+              "default": 0.15,
+              "title": "cache_accept_path_end_distance_ratio",
+              "type": "number"
+            },
+            "cache_accept_path_start_distance_ratio": {
+              "default": 0.2,
+              "title": "cache_accept_path_start_distance_ratio",
+              "type": "number"
+            },
+            "cache_max_connect_to_cache_steps_multiplier": {
+              "default": 100,
+              "title": "cache_max_connect_to_cache_steps_multiplier",
+              "type": "integer"
+            },
+            "cache_path_end_distance_rating_multiplier": {
+              "default": 20,
+              "title": "cache_path_end_distance_rating_multiplier",
+              "type": "integer"
+            },
+            "cache_path_start_distance_rating_multiplier": {
+              "default": 10,
+              "title": "cache_path_start_distance_rating_multiplier",
+              "type": "integer"
+            },
+            "direct_distance_to_consider_short_request": {
+              "default": 100,
+              "title": "direct_distance_to_consider_short_request",
+              "type": "integer"
+            },
+            "enemy_with_different_destination_collision_penalty": {
+              "default": 30,
+              "title": "enemy_with_different_destination_collision_penalty",
+              "type": "integer"
+            },
+            "extended_collision_penalty": {
+              "default": 3,
+              "title": "extended_collision_penalty",
+              "type": "integer"
+            },
+            "fwd2bwd_ratio": {
+              "default": 5,
+              "title": "fwd2bwd_ratio",
+              "type": "integer"
+            },
+            "general_entity_collision_penalty": {
+              "default": 10,
+              "title": "general_entity_collision_penalty",
+              "type": "integer"
+            },
+            "general_entity_subsequent_collision_penalty": {
+              "default": 3,
+              "title": "general_entity_subsequent_collision_penalty",
+              "type": "integer"
+            },
+            "goal_pressure_ratio": {
+              "default": 2,
+              "title": "goal_pressure_ratio",
+              "type": "integer"
+            },
+            "ignore_moving_enemy_collision_distance": {
+              "default": 5,
+              "title": "ignore_moving_enemy_collision_distance",
+              "type": "integer"
+            },
+            "long_cache_min_cacheable_distance": {
+              "default": 30,
+              "title": "long_cache_min_cacheable_distance",
+              "type": "integer"
+            },
+            "long_cache_size": {
+              "default": 25,
+              "title": "long_cache_size",
+              "type": "integer"
+            },
+            "max_clients_to_accept_any_new_request": {
+              "default": 10,
+              "title": "max_clients_to_accept_any_new_request",
+              "type": "integer"
+            },
+            "max_clients_to_accept_short_new_request": {
+              "default": 100,
+              "title": "max_clients_to_accept_short_new_request",
+              "type": "integer"
+            },
+            "max_steps_worked_per_tick": {
+              "default": 1000,
+              "title": "max_steps_worked_per_tick",
+              "type": "integer"
+            },
+            "max_work_done_per_tick": {
+              "default": 8000,
+              "title": "max_work_done_per_tick",
+              "type": "integer"
+            },
+            "min_steps_to_check_path_find_termination": {
+              "default": 2000,
+              "title": "min_steps_to_check_path_find_termination",
+              "type": "integer"
+            },
+            "negative_cache_accept_path_end_distance_ratio": {
+              "default": 0.3,
+              "title": "negative_cache_accept_path_end_distance_ratio",
+              "type": "number"
+            },
+            "negative_cache_accept_path_start_distance_ratio": {
+              "default": 0.3,
+              "title": "negative_cache_accept_path_start_distance_ratio",
+              "type": "number"
+            },
+            "negative_path_cache_delay_interval": {
+              "default": 20,
+              "title": "negative_path_cache_delay_interval",
+              "type": "integer"
+            },
+            "overload_levels": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ],
+                "required": []
+              },
+              "title": "overload_levels",
+              "type": "array"
+            },
+            "overload_multipliers": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ],
+                "required": []
+              },
+              "title": "overload_multipliers",
+              "type": "array"
+            },
+            "short_cache_min_algo_steps_to_cache": {
+              "default": 50,
+              "title": "short_cache_min_algo_steps_to_cache",
+              "type": "integer"
+            },
+            "short_cache_min_cacheable_distance": {
+              "default": 10,
+              "title": "short_cache_min_cacheable_distance",
+              "type": "integer"
+            },
+            "short_cache_size": {
+              "default": 5,
+              "title": "short_cache_size",
+              "type": "integer"
+            },
+            "short_request_max_steps": {
+              "default": 1000,
+              "title": "short_request_max_steps",
+              "type": "integer"
+            },
+            "short_request_ratio": {
+              "default": 0.5,
+              "title": "short_request_ratio",
+              "type": "number"
+            },
+            "stale_enemy_with_same_destination_collision_penalty": {
+              "default": 30,
+              "title": "stale_enemy_with_same_destination_collision_penalty",
+              "type": "integer"
+            },
+            "start_to_goal_cost_multiplier_to_terminate_path_find": {
+              "default": 2000,
+              "title": "start_to_goal_cost_multiplier_to_terminate_path_find",
+              "type": "number"
+            },
+            "use_path_cache": {
+              "default": true,
+              "title": "use_path_cache",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "fwd2bwd_ratio",
+            "goal_pressure_ratio",
+            "max_steps_worked_per_tick",
+            "max_work_done_per_tick",
+            "use_path_cache",
+            "short_cache_size",
+            "long_cache_size",
+            "short_cache_min_cacheable_distance",
+            "short_cache_min_algo_steps_to_cache",
+            "long_cache_min_cacheable_distance",
+            "cache_max_connect_to_cache_steps_multiplier",
+            "cache_accept_path_start_distance_ratio",
+            "cache_accept_path_end_distance_ratio",
+            "negative_cache_accept_path_start_distance_ratio",
+            "negative_cache_accept_path_end_distance_ratio",
+            "cache_path_start_distance_rating_multiplier",
+            "cache_path_end_distance_rating_multiplier",
+            "stale_enemy_with_same_destination_collision_penalty",
+            "ignore_moving_enemy_collision_distance",
+            "enemy_with_different_destination_collision_penalty",
+            "general_entity_collision_penalty",
+            "general_entity_subsequent_collision_penalty",
+            "extended_collision_penalty",
+            "max_clients_to_accept_any_new_request",
+            "max_clients_to_accept_short_new_request",
+            "direct_distance_to_consider_short_request",
+            "short_request_max_steps",
+            "short_request_ratio",
+            "min_steps_to_check_path_find_termination",
+            "start_to_goal_cost_multiplier_to_terminate_path_find",
+            "overload_levels",
+            "overload_multipliers",
+            "negative_path_cache_delay_interval"
+          ],
+          "title": "path_finder",
+          "type": "object"
+        },
+        "pollution": {
+          "additionalProperties": false,
+          "properties": {
+            "ageing": {
+              "default": 1,
+              "title": "ageing",
+              "type": "integer"
+            },
+            "diffusion_ratio": {
+              "default": 0.02,
+              "description": "these are values for 60 ticks (1 simulated second)\namount that is diffused to neighboring chunk",
+              "title": "diffusion_ratio",
+              "type": "number"
+            },
+            "enabled": {
+              "default": true,
+              "title": "enabled",
+              "type": "boolean"
+            },
+            "enemy_attack_pollution_consumption_modifier": {
+              "default": 1,
+              "title": "enemy_attack_pollution_consumption_modifier",
+              "type": "integer"
+            },
+            "expected_max_per_chunk": {
+              "default": 150,
+              "title": "expected_max_per_chunk",
+              "type": "integer"
+            },
+            "max_pollution_to_restore_trees": {
+              "default": 20,
+              "title": "max_pollution_to_restore_trees",
+              "type": "integer"
+            },
+            "min_pollution_to_damage_trees": {
+              "default": 60,
+              "title": "min_pollution_to_damage_trees",
+              "type": "integer"
+            },
+            "min_to_diffuse": {
+              "default": 15,
+              "title": "min_to_diffuse",
+              "type": "integer"
+            },
+            "min_to_show_per_chunk": {
+              "default": 50,
+              "title": "min_to_show_per_chunk",
+              "type": "integer"
+            },
+            "pollution_per_tree_damage": {
+              "default": 50,
+              "title": "pollution_per_tree_damage",
+              "type": "integer"
+            },
+            "pollution_restored_per_tree_damage": {
+              "default": 10,
+              "title": "pollution_restored_per_tree_damage",
+              "type": "integer"
+            },
+            "pollution_with_max_forest_damage": {
+              "default": 150,
+              "title": "pollution_with_max_forest_damage",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "enabled",
+            "diffusion_ratio",
+            "min_to_diffuse",
+            "ageing",
+            "expected_max_per_chunk",
+            "min_to_show_per_chunk",
+            "min_pollution_to_damage_trees",
+            "pollution_with_max_forest_damage",
+            "pollution_per_tree_damage",
+            "pollution_restored_per_tree_damage",
+            "max_pollution_to_restore_trees",
+            "enemy_attack_pollution_consumption_modifier"
+          ],
+          "title": "pollution",
+          "type": "object"
+        },
+        "steering": {
+          "additionalProperties": false,
+          "properties": {
+            "default": {
+              "additionalProperties": false,
+              "properties": {
+                "force_unit_fuzzy_goto_behavior": {
+                  "default": false,
+                  "title": "force_unit_fuzzy_goto_behavior",
+                  "type": "boolean"
+                },
+                "radius": {
+                  "default": 1.2,
+                  "title": "radius",
+                  "type": "number"
+                },
+                "separation_factor": {
+                  "default": 1.2,
+                  "title": "separation_factor",
+                  "type": "number"
+                },
+                "separation_force": {
+                  "default": 0.005,
+                  "title": "separation_force",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "radius",
+                "separation_force",
+                "separation_factor",
+                "force_unit_fuzzy_goto_behavior"
+              ],
+              "title": "default",
+              "type": "object"
+            },
+            "moving": {
+              "additionalProperties": false,
+              "properties": {
+                "force_unit_fuzzy_goto_behavior": {
+                  "default": false,
+                  "title": "force_unit_fuzzy_goto_behavior",
+                  "type": "boolean"
+                },
+                "radius": {
+                  "default": 3,
+                  "title": "radius",
+                  "type": "integer"
+                },
+                "separation_factor": {
+                  "default": 3,
+                  "title": "separation_factor",
+                  "type": "integer"
+                },
+                "separation_force": {
+                  "default": 0.01,
+                  "title": "separation_force",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "radius",
+                "separation_force",
+                "separation_factor",
+                "force_unit_fuzzy_goto_behavior"
+              ],
+              "title": "moving",
+              "type": "object"
+            }
+          },
+          "required": [
+            "default",
+            "moving"
+          ],
+          "title": "steering",
+          "type": "object"
+        },
+        "unit_group": {
+          "additionalProperties": false,
+          "properties": {
+            "max_gathering_unit_groups": {
+              "default": 30,
+              "title": "max_gathering_unit_groups",
+              "type": "integer"
+            },
+            "max_group_gathering_time": {
+              "default": 36000,
+              "title": "max_group_gathering_time",
+              "type": "integer"
+            },
+            "max_group_member_fallback_factor": {
+              "default": 3,
+              "title": "max_group_member_fallback_factor",
+              "type": "integer"
+            },
+            "max_group_radius": {
+              "default": 30,
+              "title": "max_group_radius",
+              "type": "integer"
+            },
+            "max_group_slowdown_factor": {
+              "default": 0.3,
+              "title": "max_group_slowdown_factor",
+              "type": "number"
+            },
+            "max_member_slowdown_when_ahead": {
+              "default": 0.6,
+              "title": "max_member_slowdown_when_ahead",
+              "type": "number"
+            },
+            "max_member_speedup_when_behind": {
+              "default": 1.4,
+              "title": "max_member_speedup_when_behind",
+              "type": "number"
+            },
+            "max_unit_group_size": {
+              "default": 200,
+              "title": "max_unit_group_size",
+              "type": "integer"
+            },
+            "max_wait_time_for_late_members": {
+              "default": 7200,
+              "title": "max_wait_time_for_late_members",
+              "type": "integer"
+            },
+            "member_disown_distance": {
+              "default": 10,
+              "title": "member_disown_distance",
+              "type": "integer"
+            },
+            "min_group_gathering_time": {
+              "default": 3600,
+              "title": "min_group_gathering_time",
+              "type": "integer"
+            },
+            "min_group_radius": {
+              "default": 5,
+              "title": "min_group_radius",
+              "type": "integer"
+            },
+            "tick_tolerance_when_member_arrives": {
+              "default": 60,
+              "title": "tick_tolerance_when_member_arrives",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "min_group_gathering_time",
+            "max_group_gathering_time",
+            "max_wait_time_for_late_members",
+            "max_group_radius",
+            "min_group_radius",
+            "max_member_speedup_when_behind",
+            "max_member_slowdown_when_ahead",
+            "max_group_slowdown_factor",
+            "max_group_member_fallback_factor",
+            "member_disown_distance",
+            "tick_tolerance_when_member_arrives",
+            "max_gathering_unit_groups",
+            "max_unit_group_size"
+          ],
+          "title": "unit_group",
+          "type": "object"
+        }
+      },
+      "required": [
+        "difficulty_settings",
+        "asteroids",
+        "pollution",
+        "enemy_evolution",
+        "enemy_expansion",
+        "unit_group",
+        "steering",
+        "path_finder",
+        "max_failed_behavior_count"
+      ],
+      "title": "map_settings",
+      "type": "object"
+    },
+    "mods": {
+      "additionalProperties": false,
+      "description": "### Factorio application configuration ####\n#\n#\n#\n#",
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "enabled",
+          "type": "boolean"
+        },
+        "image": {
+          "additionalProperties": false,
+          "properties": {
+            "pullPolicy": {
+              "default": "Always",
+              "description": "# Container image pull policy",
+              "title": "pullPolicy",
+              "type": "string"
+            },
+            "repository": {
+              "default": "ghcr.io/sqljames/factorio-mod-downloader",
+              "title": "repository",
+              "type": "string"
+            },
+            "tag": {
+              "default": "1.0.1",
+              "description": "# Overrides the image tag whose default is the chart appVersion.",
+              "title": "tag",
+              "type": "string"
+            }
+          },
+          "required": [
+            "repository",
+            "pullPolicy",
+            "tag"
+          ],
+          "title": "image",
+          "type": "object"
+        },
+        "portal": {
+          "description": "in order to use the mods portal you will need to specify the username and token in the server_settings.",
+          "items": {
+            "required": []
+          },
+          "title": "portal",
+          "type": "array"
+        },
+        "unofficial": {
+          "description": " - name: factorissimo-2-notnotmelon\n   version: 3.5.11\nunofficial section is meant to just allow you to download and place folders into the mods folder.\nwe will not check version compatibility automatically with these downloads.\nyou can encounter an error if the file names dont match what the mod is expecting for example\nError Util.cpp:83: Failed to load mod \"Squeak-Through\": Filename of mod\n/factorio/mods/Squeak-Through.zip doesn't match the expected Squeak Through_1.8.2.zip (case sensitive!)",
+          "items": {
+            "required": []
+          },
+          "title": "unofficial",
+          "type": "array"
+        }
+      },
+      "required": [
+        "image",
+        "enabled",
+        "portal",
+        "unofficial"
+      ],
+      "title": "mods",
+      "type": "object"
+    },
+    "nodeSelector": {
+      "additionalProperties": false,
+      "required": [],
+      "title": "nodeSelector",
+      "type": "object"
+    },
+    "persistence": {
+      "additionalProperties": false,
+      "description": "### Persistence Configuration ####\n#\n#\n#\n#\n#\n#\n#\n# Sets the data persistence volume configuration\n# IMPORTANT: If you do not setup a PV all your savegames will be lost on pod recreation or helm upgrade",
+      "properties": {
+        "annotations": {
+          "additionalProperties": false,
+          "description": "# If you have annotations to spin up a PV i.e. the location. Remove the curly braces",
+          "required": [],
+          "title": "annotations",
+          "type": "object"
+        },
+        "dataDir": {
+          "additionalProperties": false,
+          "properties": {
+            "Size": {
+              "default": "1Gi",
+              "title": "Size",
+              "type": "string"
+            }
+          },
+          "required": [
+            "Size"
+          ],
+          "title": "dataDir",
+          "type": "object"
+        },
+        "enabled": {
+          "default": true,
+          "title": "enabled",
+          "type": "boolean"
+        },
+        "labels": {
+          "additionalProperties": false,
+          "description": "# If you have additional labels to apply to the volume",
+          "required": [],
+          "title": "labels",
+          "type": "object"
+        },
+        "storageClassName": {
+          "default": "",
+          "description": "# If you like to use a specific storageClassName, set the name. Leave it blank for the default class",
+          "title": "storageClassName",
+          "type": "string"
+        }
+      },
+      "required": [
+        "enabled",
+        "dataDir",
+        "storageClassName",
+        "annotations",
+        "labels"
+      ],
+      "title": "persistence",
+      "type": "object"
+    },
+    "podSecurityContext": {
+      "additionalProperties": false,
+      "properties": {
+        "runAsGroup": {
+          "default": 845,
+          "title": "runAsGroup",
+          "type": "integer"
+        },
+        "runAsUser": {
+          "default": 845,
+          "title": "runAsUser",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "runAsUser",
+        "runAsGroup"
+      ],
+      "title": "podSecurityContext",
+      "type": "object"
+    },
+    "port_fixer": {
+      "additionalProperties": false,
+      "description": "#\n#\n#\n#\n#\n#",
+      "properties": {
+        "enabled": {
+          "default": false,
+          "description": "Adds an extra container that tries to help with connection issues via the public server browser.\nThis is especially useful when you can’t set up outgoing static port mappings and see log messages like these:\n\u003e Warning ServerRouter.cpp:541: Received own address message reply with conflicting address (got IP ADDR:({\u003cip\u003e:19296}), expected IP ADDR:({\u003cip\u003e:58037}))\n\u003e Warning ServerMultiplayerManager.cpp:651: Determining own address has failed. Best guess: IP ADDR:({\u003cip\u003e:58037})\n\u003e Warning ServerRouter.cpp:541: Received own address message reply with conflicting address (got IP ADDR:({\u003cip\u003e:19297}), expected IP ADDR:({\u003cip\u003e:58037}))\n\u003e Warning ServerRouter.cpp:541: Received own address message reply with conflicting address (got IP ADDR:({\u003cip\u003e:24105}), expected IP ADDR:({\u003cip\u003e:58037}))\nNote: Port forwarding for incoming traffic still needs to be set up properly for this to work.\nFor more info, check out:\n  - https://github.com/SQLJames/factorio-server-charts/issues/15",
+          "title": "enabled",
+          "type": "boolean"
+        },
+        "image": {
+          "additionalProperties": false,
+          "properties": {
+            "pullPolicy": {
+              "default": "Always",
+              "title": "pullPolicy",
+              "type": "string"
+            },
+            "repository": {
+              "default": "ghcr.io/zcube/factorio-port-fixer",
+              "title": "repository",
+              "type": "string"
+            },
+            "tag": {
+              "default": "latest",
+              "title": "tag",
+              "type": "string"
+            }
+          },
+          "required": [
+            "repository",
+            "pullPolicy",
+            "tag"
+          ],
+          "title": "image",
+          "type": "object"
+        },
+        "port": {
+          "default": "",
+          "title": "port",
+          "type": "string"
+        }
+      },
+      "required": [
+        "enabled",
+        "image",
+        "port"
+      ],
+      "title": "port_fixer",
+      "type": "object"
+    },
+    "rcon": {
+      "additionalProperties": false,
+      "description": "#\n#\n#\n#\n#\n#\nPassword and port for the rcon service",
+      "properties": {
+        "external": {
+          "default": true,
+          "title": "external",
+          "type": "boolean"
+        },
+        "ipFamilies": {
+          "description": "# List of IP families (e.g. IPv4, IPv6) assigned to the service. This field is usually assigned automatically\n# based on cluster configuration and the ipFamilyPolicy field.\n# Ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ],
+            "required": []
+          },
+          "title": "ipFamilies",
+          "type": "array"
+        },
+        "ipFamilyPolicy": {
+          "default": "SingleStack",
+          "description": "# Represents the dual-stack-ness requested or required by this Service. Possible values are\n# SingleStack, PreferDualStack or RequireDualStack.\n# The ipFamilies and clusterIPs fields depend on the value of this field.\n# Ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/",
+          "title": "ipFamilyPolicy",
+          "type": "string"
+        },
+        "password": {
+          "default": "CHANGEMECHANGEME",
+          "description": "Password for rcon",
+          "title": "password",
+          "type": "string"
+        },
+        "passwordSecret": {
+          "default": "",
+          "description": "Existing secret containing a `rconpw` data field",
+          "title": "passwordSecret",
+          "type": "string"
+        },
+        "port": {
+          "default": 30100,
+          "description": "rcon port",
+          "title": "port",
+          "type": "integer"
+        },
+        "serviceAnnotations": {
+          "additionalProperties": false,
+          "required": [],
+          "title": "serviceAnnotations",
+          "type": "object"
+        },
+        "type": {
+          "default": "LoadBalancer",
+          "title": "type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ipFamilyPolicy",
+        "ipFamilies",
+        "external",
+        "type",
+        "serviceAnnotations",
+        "passwordSecret",
+        "password",
+        "port"
+      ],
+      "title": "rcon",
+      "type": "object"
+    },
+    "rconAPI": {
+      "additionalProperties": false,
+      "description": "#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#",
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "enabled",
+          "type": "boolean"
+        },
+        "grpcPort": {
+          "default": 30111,
+          "title": "grpcPort",
+          "type": "integer"
+        },
+        "httpPort": {
+          "default": 30110,
+          "title": "httpPort",
+          "type": "integer"
+        },
+        "image": {
+          "additionalProperties": false,
+          "properties": {
+            "pullPolicy": {
+              "default": "Always",
+              "title": "pullPolicy",
+              "type": "string"
+            },
+            "repository": {
+              "default": "ghcr.io/nekomeowww/factorio-rcon-api",
+              "title": "repository",
+              "type": "string"
+            },
+            "tag": {
+              "default": "latest",
+              "title": "tag",
+              "type": "string"
+            }
+          },
+          "required": [
+            "repository",
+            "pullPolicy",
+            "tag"
+          ],
+          "title": "image",
+          "type": "object"
+        },
+        "ingress": {
+          "additionalProperties": false,
+          "properties": {
+            "annotations": {
+              "additionalProperties": false,
+              "properties": {
+                "nginx.ingress.kubernetes.io/backend-protocol": {
+                  "default": "GRPC",
+                  "title": "nginx.ingress.kubernetes.io/backend-protocol",
+                  "type": "string"
+                },
+                "nginx.ingress.kubernetes.io/ssl-redirect": {
+                  "default": "true",
+                  "title": "nginx.ingress.kubernetes.io/ssl-redirect",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "nginx.ingress.kubernetes.io/ssl-redirect",
+                "nginx.ingress.kubernetes.io/backend-protocol"
+              ],
+              "title": "annotations",
+              "type": "object"
+            },
+            "className": {
+              "default": "nginx",
+              "title": "className",
+              "type": "string"
+            },
+            "enabled": {
+              "default": true,
+              "title": "enabled",
+              "type": "boolean"
+            },
+            "hostname": {
+              "default": "factorio.example.com",
+              "title": "hostname",
+              "type": "string"
+            },
+            "tls": {
+              "additionalProperties": false,
+              "properties": {
+                "enabled": {
+                  "default": false,
+                  "title": "enabled",
+                  "type": "boolean"
+                },
+                "secretName": {
+                  "default": "cert-factorio.example.com",
+                  "title": "secretName",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "enabled",
+                "secretName"
+              ],
+              "title": "tls",
+              "type": "object"
+            }
+          },
+          "required": [
+            "enabled",
+            "hostname",
+            "className",
+            "annotations",
+            "tls"
+          ],
+          "title": "ingress",
+          "type": "object"
+        },
+        "ipFamilies": {
+          "description": "# List of IP families (e.g. IPv4, IPv6) assigned to the service. This field is usually assigned automatically\n# based on cluster configuration and the ipFamilyPolicy field.\n# Ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ],
+            "required": []
+          },
+          "title": "ipFamilies",
+          "type": "array"
+        },
+        "ipFamilyPolicy": {
+          "default": "SingleStack",
+          "description": "# Represents the dual-stack-ness requested or required by this Service. Possible values are\n# SingleStack, PreferDualStack or RequireDualStack.\n# The ipFamilies and clusterIPs fields depend on the value of this field.\n# Ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/",
+          "title": "ipFamilyPolicy",
+          "type": "string"
+        },
+        "serviceAnnotations": {
+          "additionalProperties": false,
+          "required": [],
+          "title": "serviceAnnotations",
+          "type": "object"
+        },
+        "type": {
+          "default": "ClusterIP",
+          "title": "type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ipFamilyPolicy",
+        "ipFamilies",
+        "enabled",
+        "image",
+        "type",
+        "serviceAnnotations",
+        "httpPort",
+        "grpcPort",
+        "ingress"
+      ],
+      "title": "rconAPI",
+      "type": "object"
+    },
+    "replicaCount": {
+      "default": 1,
+      "title": "replicaCount",
+      "type": "integer"
+    },
+    "resources": {
+      "additionalProperties": false,
+      "description": "# Compute Resources required by the operator container",
+      "properties": {
+        "limits": {
+          "additionalProperties": false,
+          "description": "# If you like to limit factiorio resources",
+          "required": [],
+          "title": "limits",
+          "type": "object"
+        },
+        "requests": {
+          "additionalProperties": false,
+          "description": "# We have to ensure that factorio have enough computing resources avaiable. We set here an absolute minimum\n# Keep in mind that big factorio base can consume a lot of memory and cpu",
+          "properties": {
+            "cpu": {
+              "default": "500m",
+              "title": "cpu",
+              "type": "string"
+            },
+            "memory": {
+              "default": "512Mi",
+              "title": "memory",
+              "type": "string"
+            }
+          },
+          "required": [
+            "memory",
+            "cpu"
+          ],
+          "title": "requests",
+          "type": "object"
+        }
+      },
+      "required": [
+        "requests",
+        "limits"
+      ],
+      "title": "resources",
+      "type": "object"
+    },
+    "securityContext": {
+      "additionalProperties": false,
+      "description": "https://github.com/factoriotools/factorio-docker/blob/master/docker/Dockerfile",
+      "properties": {
+        "fsGroup": {
+          "default": 845,
+          "title": "fsGroup",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "fsGroup"
+      ],
+      "title": "securityContext",
+      "type": "object"
+    },
+    "serverPassword": {
+      "additionalProperties": false,
+      "description": "#\n#",
+      "properties": {
+        "game_password": {
+          "default": "",
+          "description": "password required to log into the factorio server",
+          "title": "game_password",
+          "type": "string"
+        },
+        "passwordSecret": {
+          "default": "",
+          "description": "Existing Secret containing a `game_password` data entry",
+          "title": "passwordSecret",
+          "type": "string"
+        }
+      },
+      "required": [
+        "game_password",
+        "passwordSecret"
+      ],
+      "title": "serverPassword",
+      "type": "object"
+    },
+    "server_settings": {
+      "additionalProperties": false,
+      "description": "#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#",
+      "properties": {
+        "afk_autokick_interval": {
+          "default": 0,
+          "description": "How many minutes until someone is kicked when doing nothing, 0 for never.",
+          "title": "afk_autokick_interval",
+          "type": "integer"
+        },
+        "allow_commands": {
+          "default": "admins-only",
+          "description": "possible values are, true, false and admins-only",
+          "title": "allow_commands",
+          "type": "string"
+        },
+        "auto_pause": {
+          "default": true,
+          "description": "Whether should the server be paused when no players are present.",
+          "title": "auto_pause",
+          "type": "boolean"
+        },
+        "auto_pause_when_players_connect": {
+          "default": false,
+          "description": "Whether should the server be paused when someone is connecting to the server.",
+          "title": "auto_pause_when_players_connect",
+          "type": "boolean"
+        },
+        "autosave_interval": {
+          "default": 10,
+          "description": "Autosave interval in minutes",
+          "title": "autosave_interval",
+          "type": "integer"
+        },
+        "autosave_only_on_server": {
+          "default": true,
+          "description": "Whether autosaves should be saved only on server or also on all connected clients. Default is true.",
+          "title": "autosave_only_on_server",
+          "type": "boolean"
+        },
+        "autosave_slots": {
+          "default": 5,
+          "description": "server autosave slots, it is cycled through when the server autosaves.",
+          "title": "autosave_slots",
+          "type": "integer"
+        },
+        "description": {
+          "default": "Factorio running on Kubernetes",
+          "description": "Your Instance Description",
+          "title": "description",
+          "type": "string"
+        },
+        "ignore_player_limit_for_returning_players": {
+          "default": false,
+          "description": "Players that played on this map already can join even when the max player limit was reached.",
+          "title": "ignore_player_limit_for_returning_players",
+          "type": "boolean"
+        },
+        "max_heartbeats_per_second": {
+          "default": 60,
+          "description": "Network tick rate. Maximum rate game updates packets are sent at before bundling them together.\nMinimum value is 6, maximum value is 240.",
+          "title": "max_heartbeats_per_second",
+          "type": "integer"
+        },
+        "max_players": {
+          "default": 0,
+          "description": "Maximum number of players allowed, admins can join even a full server. 0 means unlimited.",
+          "title": "max_players",
+          "type": "integer"
+        },
+        "max_upload_in_kilobytes_per_second": {
+          "default": 0,
+          "description": "optional, default value is 0. 0 means unlimited.",
+          "title": "max_upload_in_kilobytes_per_second",
+          "type": "integer"
+        },
+        "max_upload_slots": {
+          "default": 5,
+          "description": "optional, default value is 5. 0 means unlimited.",
+          "title": "max_upload_slots",
+          "type": "integer"
+        },
+        "maximum_segment_size": {
+          "default": 100,
+          "title": "maximum_segment_size",
+          "type": "integer"
+        },
+        "maximum_segment_size_peer_count": {
+          "default": 10,
+          "title": "maximum_segment_size_peer_count",
+          "type": "integer"
+        },
+        "minimum_latency_in_ticks": {
+          "default": 0,
+          "description": "optional one tick is 16ms in default speed, default value is 0. 0 means no minimum.",
+          "title": "minimum_latency_in_ticks",
+          "type": "integer"
+        },
+        "minimum_segment_size": {
+          "default": 25,
+          "description": " Long network messages are split into segments that are sent\n over multiple ticks. Their size depends on the number of peers currently connected.\n Increasing the segment size will increase upload bandwidth requirement for the server\n and download bandwidth requirement for clients. This setting only affects server\n outbound messages. Changing these settings can have a negative impact on connection\n stability for some clients.",
+          "title": "minimum_segment_size",
+          "type": "integer"
+        },
+        "minimum_segment_size_peer_count": {
+          "default": 20,
+          "title": "minimum_segment_size_peer_count",
+          "type": "integer"
+        },
+        "name": {
+          "default": "Factorio",
+          "description": "Your Instance Name",
+          "title": "name",
+          "type": "string"
+        },
+        "non_blocking_saving": {
+          "default": false,
+          "description": " Highly experimental feature, enable only at your own\n risk of losing your saves. On UNIX systems, server will fork itself to create an\n autosave. Autosaving on connected Windows clients will be disabled regardless of\n autosave_only_on_server option.",
+          "title": "non_blocking_saving",
+          "type": "boolean"
+        },
+        "only_admins_can_pause_the_game": {
+          "default": true,
+          "description": "specifies if anyone can pause or only admins",
+          "title": "only_admins_can_pause_the_game",
+          "type": "boolean"
+        },
+        "require_user_verification": {
+          "default": false,
+          "description": "When set to true, the server will only allow clients that have a valid Factorio.com account",
+          "title": "require_user_verification",
+          "type": "boolean"
+        },
+        "tags": {
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "required": []
+          },
+          "title": "tags",
+          "type": "array"
+        },
+        "visibility": {
+          "additionalProperties": false,
+          "description": "Game visibility",
+          "properties": {
+            "lan": {
+              "default": true,
+              "description": "Game will be broadcast on LAN",
+              "title": "lan",
+              "type": "boolean"
+            },
+            "public": {
+              "default": false,
+              "description": "Game will be published on the official Factorio matching server",
+              "title": "public",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "public",
+            "lan"
+          ],
+          "title": "visibility",
+          "type": "object"
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "tags",
+        "max_players",
+        "visibility",
+        "require_user_verification",
+        "max_upload_in_kilobytes_per_second",
+        "max_upload_slots",
+        "minimum_latency_in_ticks",
+        "ignore_player_limit_for_returning_players",
+        "allow_commands",
+        "autosave_interval",
+        "autosave_slots",
+        "afk_autokick_interval",
+        "auto_pause",
+        "auto_pause_when_players_connect",
+        "only_admins_can_pause_the_game",
+        "autosave_only_on_server",
+        "non_blocking_saving",
+        "max_heartbeats_per_second",
+        "minimum_segment_size",
+        "minimum_segment_size_peer_count",
+        "maximum_segment_size",
+        "maximum_segment_size_peer_count"
+      ],
+      "title": "server_settings",
+      "type": "object"
+    },
+    "service": {
+      "additionalProperties": false,
+      "description": "### Service Configuration ####\n#\n#\n#\n#\n#\n#\n# The service is a kind tricky, so factorio uses UDP, but not every cloud provider is able to route UDP traffic.\n# I.e. your cloud provider has LoadBalancers without the ability for UDP protocol. Furthermore kubectl ist not able to route UDP Traffic\n# ref: https://github.com/kubernetes/kubernetes/issues/47862\n# You have to expose factorio on a NodePort and map a port between 30000 and 32767, but the native port is 34197. So you have always to specify the port in factorio.\n# The best way ist to define a ClusterIP service and define one or more externalIPs. Of course this IPs must be available on the node the factorio pod runs on!",
+      "properties": {
+        "annotations": {
+          "additionalProperties": false,
+          "description": "# ClusterIp setup\nClusterIP:\n  port: 34197\n# LoadBalancer setup\ntype: LoadBalancer\nexternalTrafficPolicy: Cluster",
+          "required": [],
+          "title": "annotations",
+          "type": "object"
+        },
+        "ipFamilies": {
+          "description": "# List of IP families (e.g. IPv4, IPv6) assigned to the service. This field is usually assigned automatically\n# based on cluster configuration and the ipFamilyPolicy field.\n# Ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ],
+            "required": []
+          },
+          "title": "ipFamilies",
+          "type": "array"
+        },
+        "ipFamilyPolicy": {
+          "default": "SingleStack",
+          "description": "# Represents the dual-stack-ness requested or required by this Service. Possible values are\n# SingleStack, PreferDualStack or RequireDualStack.\n# The ipFamilies and clusterIPs fields depend on the value of this field.\n# Ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/",
+          "title": "ipFamilyPolicy",
+          "type": "string"
+        },
+        "port": {
+          "default": 31497,
+          "title": "port",
+          "type": "integer"
+        },
+        "type": {
+          "default": "NodePort",
+          "title": "type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "ipFamilyPolicy",
+        "ipFamilies",
+        "port",
+        "annotations"
+      ],
+      "title": "service",
+      "type": "object"
+    },
+    "strategy": {
+      "additionalProperties": false,
+      "description": "# Strategy used to replace old pods\n# IMPORTANT: use with care, it is suggested to leave as that for upgrade purposes\n# ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy",
+      "properties": {
+        "type": {
+          "default": "Recreate",
+          "title": "type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "strategy",
+      "type": "object"
+    },
+    "tolerations": {
+      "description": "Tolerations for pod assignment",
+      "items": {
+        "required": []
+      },
+      "title": "tolerations",
+      "type": "array"
+    },
+    "white_list": {
+      "items": {
+        "required": []
+      },
+      "title": "white_list",
+      "type": "array"
+    }
+  },
+  "required": [
+    "replicaCount",
+    "hostNetworkEnabled",
+    "securityContext",
+    "podSecurityContext",
+    "image",
+    "nodeSelector",
+    "service",
+    "resources",
+    "strategy",
+    "tolerations",
+    "affinity",
+    "persistence",
+    "additionalContainers",
+    "mods",
+    "factorioServer",
+    "import_save",
+    "account",
+    "serverPassword",
+    "server_settings",
+    "port_fixer",
+    "rcon",
+    "rconAPI",
+    "map_gen_settings",
+    "map_settings",
+    "admin_list",
+    "white_list",
+    "ban_list"
+  ],
+  "type": "object"
+}

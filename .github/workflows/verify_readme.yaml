@@ -13,8 +13,8 @@ jobs:
         uses: actions/setup-go@v7.0.0
         with:
           go-version: 'stable'
-      - name: install chart-doc-gen
-        run: go install kubepack.dev/chart-doc-gen@latest
+      - name: install helm-docs
+        run: go install github.com/norwoodj/helm-docs/cmd/helm-docs@latest
       - name: Set up dependencies
         run: |
           sudo apt-get update

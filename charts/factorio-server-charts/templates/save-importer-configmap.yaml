@@ -10,11 +10,11 @@ metadata:
 data:
   save-importer.sh: |
     #directory where file at $source_url will be downloaded to
-    download_dir="/factorio/save-importer/download" 
+    download_dir="/factorio/save-importer/download"
 
     #directory where files from $source_url that meet staging criteria will be downloaded to
     #OR where files can be manually placed for import regardless of criteria.
-    staging_dir="/factorio/save-importer/import" 
+    staging_dir="/factorio/save-importer/import"
 
     #file used to record checksums and urls of previously downloaded files
     import_data="/factorio/save-importer/import_data.txt"
@@ -99,7 +99,7 @@ data:
     else
         echo "source '$source_url' previously downloaded."
     fi
-    
+
     if [ "$do_download" -eq 1 ]; then
         echo "downloading '$source_url'..."
         if curl -L -o "$download_dir/$target_filename" "$source_url"; then
@@ -108,7 +108,7 @@ data:
         echo "unable to download $file_type file from '$source_url'. skipping import process."
         exit 0
         fi
-    else 
+    else
         echo "conditions not met to download file."
     fi
     }
@@ -183,10 +183,10 @@ data:
         if [ $? -eq 0 ]; then
         # Copy was successful
         echo "File copied to '$target_dir/$target_filename'."
-        
+
         # Touch the new copy to be _certain_ it's the latest file
         touch "$target_dir/$target_filename"
-        
+
         # Delete the original file, so we don't reimport it again
         rm "$file_to_import"
         echo "staging file '$file_to_import' deleted."
