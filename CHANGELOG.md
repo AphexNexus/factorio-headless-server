@@ -1,8 +1,18 @@
-## Changelog
+# Changelog
 
-### V2.5.4 - 20261011
+## V2.5.6 - 20261013
 
-#### Doc related updates
+### Added service labels
+
+- Added helm templating to the service definition so you can now supply custom labels to the service. I did this because I wanted to use the labels to register the service with a BGP pool so the LoadBalancer External IP would get registered to my router.
+- Huge refactor to the values file to make it building via `helm-docs`
+- Added pre-commit hooks
+- Added values.schema.json back in as I have the schema validating now
+- Renamed chart so it doesn't create a conflict with the work SQLJames is doing
+
+## V2.5.4 - 20261011
+
+### Doc related updates
 
 - Changes in progress to migrate from a personal Github account to an Org.
 
@@ -16,11 +26,13 @@
 ### V2.5.2
 
 #### Non-Breaking Changes
+
 - Removed values.schema.json
 
 ### V2.5.1
 
 #### Non-Breaking Changes
+
 - Updating values.schema.json
 - Updating Readme documentation
 - Adding new github workflow to verify readme documentation is up to date going forward
@@ -37,6 +49,7 @@
 ### V2.4.1
 
 #### Non-Breaking Changes
+
 - Fixing mod download script to encode spaces properly, fixes [Issue 42](https://github.com/SQLJames/factorio-server-charts/issues/42)
 - Adding update mod check on mod script to avoid it always updating mods, fixes part of[Issue 45](https://github.com/SQLJames/factorio-server-charts/issues/45)
 

@@ -1,19 +1,28 @@
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
-    -   id: end-of-file-fixer
-    -   id: trailing-whitespace
--   repo: https://github.com/norwoodj/helm-docs
-    rev:  v1.14.2
+      - id: end-of-file-fixer
+        exclude: '\.schema\.json$'
+      - id: trailing-whitespace
+
+  - repo: https://github.com/norwoodj/helm-docs
+    rev: v1.14.2
     hooks:
       - id: helm-docs-built
         args:
           # Make the tool search for charts only under the `charts` directory
           - --chart-search-root=charts
--   repo: https://github.com/gruntwork-io/pre-commit
-    rev: v0.1.23  # Use the latest available release tag
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.23 # Use the latest available release tag
     hooks:
       - id: helmlint
         # Optional: Add arguments like strict mode if desired
         args: ["--strict"]
+  - repo: https://github.com/dadav/helm-schema
+    rev: 0.23.5 # Replace with your target release version
+    hooks:
+      - id: helm-schema
+        pass_filenames: false
+        args:
+          - --chart-search-root=charts/factorio-headless-server
