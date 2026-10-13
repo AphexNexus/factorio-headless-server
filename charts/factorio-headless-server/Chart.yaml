@@ -1,6 +1,6 @@
 apiVersion: v2
-name: factorio-server-charts
-description: A Helm chart for running factorio in kubernetes
+name: factorio-headless-server
+description: A Helm chart for running Factorio in Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -16,7 +16,7 @@ keywords:
   - server
   - headless
 sources:
-  - https://github.com/aphexnexus/factorio-server-charts
+  - https://github.com/aphexnexus/factorio-headless-server
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
