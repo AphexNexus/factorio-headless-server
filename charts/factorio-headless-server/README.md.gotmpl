@@ -2,11 +2,11 @@
 
 {{- $namespace := "factorio" }}
 
-{{ template "chart.header" . }}
+{{- template "chart.header" . }}
 
-{{ template "chart.deprecationWarning" . }}
+{{- template "chart.deprecationWarning" . }}
 
-{{ template "chart.badgesSection" . }}
+{{- template "chart.badgesSection" . }}
 
 <!-- Additional Custom Badges -->
 [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/factorio-server-charts)](https://artifacthub.io/packages/search?repo=factorio-headless-server)
@@ -26,7 +26,7 @@
 ## TL;DR;
 
 ```bash
-$ helm repo add {{ $name }} {{ template "chart.sourcesList" . }}
+$ helm repo add {{ $name }} https://aphexnexus.github.io/factorio-headless-server
 $ helm repo update
 $ helm search repo {{ $name }}/{{ template "chart.name" . }}
 $ helm upgrade -i {{ $name }} {{ $name }}/{{ template "chart.name" . }} -n {{ $namespace }} --create-namespace
