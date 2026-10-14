@@ -1,7 +1,4 @@
-
-
 # factorio-headless-server
-
 ![Version: 2.5.6](https://img.shields.io/badge/Version-2.5.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.77](https://img.shields.io/badge/AppVersion-2.0.77-informational?style=flat-square)
 
 <!-- Additional Custom Badges -->
@@ -24,8 +21,7 @@ A Helm chart for running Factorio in Kubernetes
 ## TL;DR;
 
 ```bash
-$ helm repo add factorio
-* <https://github.com/aphexnexus/factorio-headless-server>
+$ helm repo add factorio https://aphexnexus.github.io/factorio-headless-server
 $ helm repo update
 $ helm search repo factorio/factorio-headless-server
 $ helm upgrade -i factorio factorio/factorio-headless-server -n factorio --create-namespace
