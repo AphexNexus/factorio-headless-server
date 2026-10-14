@@ -10,6 +10,11 @@ securityContext:
   fsGroup: 845
 
 # -- See Factorio Tools [Dockerfile](https://github.com/factoriotools/factorio-docker/blob/master/docker/Dockerfile)
+# @schema
+# type: object
+# additionalProperties: true
+# required: true
+# @schema
 podSecurityContext:
   runAsUser: 845
   runAsGroup: 845
@@ -68,10 +73,20 @@ service:
   ## LoadBalancer setup
   # type: LoadBalancer
   # externalTrafficPolicy: Cluster
+  # @schema
+  # type: object
+  # additionalProperties:
+  #   type: string
+  # @schema
   # -- Additional custom annotations for Factorio service
   annotations: {}
-  ## -- @ignored Additional custom labels for Factorio service ( future place holder )
-  #labels: {}
+  # @schema
+  # type: object
+  # additionalProperties:
+  #   type: string
+  # @schema
+  # -- Additional custom labels for Factorio service
+  labels: {}
 
 resources:
   ## We have to ensure that factorio have enough computing resources avaiable. We set here an absolute minimum
@@ -119,8 +134,20 @@ persistence:
   # -- If you like to use a specific storageClassName, set the name. Leave it blank for the default class
   storageClassName: ""
   # -- If you have annotations to spin up a PV i.e. the location. Remove the curly braces
+  # @schema
+  # type: object
+  # additionalProperties:
+  #   type: string
+  # required: true
+  # @schema
   annotations: {}
   # -- If you have additional labels to apply to the volume
+  # @schema
+  # type: object
+  # additionalProperties:
+  #   type: string
+  # required: true
+  # @schema
   labels: {}
 
 #### Additional containers ####

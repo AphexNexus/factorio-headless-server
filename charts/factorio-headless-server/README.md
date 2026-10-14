@@ -2,7 +2,7 @@
 
 # factorio-headless-server
 
-![Version: 2.5.5](https://img.shields.io/badge/Version-2.5.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.77](https://img.shields.io/badge/AppVersion-2.0.77-informational?style=flat-square)
+![Version: 2.5.6](https://img.shields.io/badge/Version-2.5.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.77](https://img.shields.io/badge/AppVersion-2.0.77-informational?style=flat-square)
 
 <!-- Additional Custom Badges -->
 [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/factorio-server-charts)](https://artifacthub.io/packages/search?repo=factorio-headless-server)
@@ -302,12 +302,12 @@ The following table lists the configurable parameters of the `factorio` chart an
 | mods.portal | list | `[]` | List of official mods to be downloaded from Factorio Mod Portal |
 | mods.unofficial | list | `[]` | List of unofficial mods name and url to download into the mods folder |
 | nodeSelector | object | `{}` | nodeSelector Node labels for pod assignment |
-| persistence.annotations | object | `{}` | If you have annotations to spin up a PV i.e. the location. Remove the curly braces |
+| persistence.annotations | object | `{}` | If you have annotations to spin up a PV i.e. the location. Remove the curly braces @schema type: object additionalProperties:   type: string required: true @schema |
 | persistence.dataDir.Size | string | `"1Gi"` | Size of the Persistent Volume Claim |
 | persistence.enabled | bool | `true` | Enable persistence using Persistent Volume Claims |
-| persistence.labels | object | `{}` | If you have additional labels to apply to the volume |
+| persistence.labels | object | `{}` | If you have additional labels to apply to the volume @schema type: object additionalProperties:   type: string required: true @schema |
 | persistence.storageClassName | string | `""` | If you like to use a specific storageClassName, set the name. Leave it blank for the default class |
-| podSecurityContext | object | `{"runAsGroup":845,"runAsUser":845}` | See Factorio Tools [Dockerfile](https://github.com/factoriotools/factorio-docker/blob/master/docker/Dockerfile) |
+| podSecurityContext | object | `{"runAsGroup":845,"runAsUser":845}` | See Factorio Tools [Dockerfile](https://github.com/factoriotools/factorio-docker/blob/master/docker/Dockerfile) @schema type: object additionalProperties: true required: true @schema |
 | port_fixer | object | `{"enabled":false,"image":{"pullPolicy":"Always","repository":"ghcr.io/zcube/factorio-port-fixer","tag":"latest"},"port":""}` | Port Fixer Parameters |
 | port_fixer.enabled | bool | `false` | Enable the Factorio Port Fixer |
 | port_fixer.image.pullPolicy | string | `"Always"` | Factorio port fixer image pull policy |
@@ -373,6 +373,7 @@ The following table lists the configurable parameters of the `factorio` chart an
 | service.annotations | object | `{}` | Additional custom annotations for Factorio service |
 | service.ipFamilies[0] | string | `"IPv4"` |  |
 | service.ipFamilyPolicy | string | `"SingleStack"` |  |
+| service.labels | object | `{}` | Additional custom labels for Factorio service |
 | service.port | int | `31497` | Factorio service port |
 | service.type | string | `"NodePort"` | Factorio service type. If you use "type: NodePort" set the port to a value you like in the range of 30000-32767. Leave it blank for a random port |
 | strategy | object | `{"type":"Recreate"}` | Strategy Parameters |
