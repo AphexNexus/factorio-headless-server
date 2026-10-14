@@ -2,11 +2,17 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ template "factorio-server-charts.fullname" . }}
+
   labels:
     app: {{ template "factorio-server-charts.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
+  {{- if .Values.service.labels }}
+  {{- range $key, $value := .Values.service.labels }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+  {{- end }}
   {{- if .Values.service.annotations }}
   annotations:
   {{- range $key, $value := .Values.service.annotations }}

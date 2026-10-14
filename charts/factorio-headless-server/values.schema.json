@@ -4,28 +4,29 @@
   "properties": {
     "account": {
       "additionalProperties": false,
-      "description": "#\n#\n#\n#",
+      "description": "### Factorio Account Configuration ####\nAccount Parameters",
       "properties": {
         "accountSecret": {
           "default": "",
-          "description": "Existing secret containing a valid factorio.com username and either a password or a token\nExample:\n\napiVersion: v1\nkind: Secret\nmetadata:\n  name: account-secret\ndata:\n  username: \u003cusername in base64\u003e\n  password: \u003cpassword in base64\u003e\n\naccountSecret: account-secret",
+          "description": "Existing secret containing a valid factorio.com username and either a password or a token\nExample:\n\napiVersion: v1\nkind: Secret\nmetadata:\n  name: account-secret\ndata:\n  username: \u003cusername in base64\u003e\n  password: \u003cpassword in base64\u003e\n\nExisting k8s secret containing a valid factorio.com username and either a password or a token (or both)",
           "title": "accountSecret",
           "type": "string"
         },
         "password": {
           "default": "",
+          "description": "Your factorio.com password. Ignored if `account.accountSecret` is set",
           "title": "password",
           "type": "string"
         },
         "token": {
           "default": "",
-          "description": "Authentication token. May be used instead of password above.",
+          "description": "Your factorio.com authentication token. May be used instead of password above.",
           "title": "token",
           "type": "string"
         },
         "username": {
           "default": "",
-          "description": "Your factorio.com login credentials. Required for games with visibility public",
+          "description": "Your factorio.com login credentials. Required for games with visibility public\nYour factorio.com username. Ignored if `account.accountSecret` is set",
           "title": "username",
           "type": "string"
         }
@@ -40,7 +41,7 @@
       "type": "object"
     },
     "additionalContainers": {
-      "description": "### Additional containers ####\n##\nSpecify any additional sidecar containers for the deployment here, such as log or metric collectors.\nSee https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#container-v1-core for the full Container\nreference.",
+      "description": "### Additional containers ####\nSpecify any additional sidecar containers for the deployment here, such as log or metric collectors.\nSee https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#container-v1-core for the full Container\nreference.\nAdditional Containers",
       "items": {
         "required": []
       },
@@ -48,7 +49,7 @@
       "type": "array"
     },
     "admin_list": {
-      "description": "#\n#\n#",
+      "description": "Username Admin list",
       "items": {
         "required": []
       },
@@ -63,6 +64,7 @@
       "type": "object"
     },
     "ban_list": {
+      "description": "- \"john_doe\"\n- \"jane_doe\"\nUsername Ban List",
       "items": {
         "required": []
       },
@@ -71,54 +73,54 @@
     },
     "factorioServer": {
       "additionalProperties": false,
-      "description": "#\n#\n#\n#\n#\n#\n#",
+      "description": "### Factorio Server Configuration ####\nFactorio Server Parameters",
       "properties": {
         "enable_space_age": {
           "default": true,
-          "description": "enables or disables the mods for DLC Space Age in mod-list.json",
+          "description": "Enables or disables the mods for DLC Space Age in mod-list.json",
           "title": "enable_space_age",
           "type": "boolean"
         },
         "env": {
           "additionalProperties": false,
-          "description": "adding addtional environment variables to the factorio server container",
+          "description": "Additional environment values for the Factorio Server container",
           "required": [],
           "title": "env",
           "type": "object"
         },
         "generate_new_save": {
           "default": true,
-          "description": "generate a new save if one does not exist before starting the server",
+          "description": "Generate a new save if `save_name` is not found",
           "title": "generate_new_save",
           "type": "boolean"
         },
         "load_latest_save": {
           "default": true,
-          "description": "load latest when true. Otherwise load SAVE_NAME",
+          "description": "Load latest save",
           "title": "load_latest_save",
           "type": "boolean"
         },
         "port": {
           "default": 31497,
-          "description": "factorio game server port\nthe default game port (34197) has been changed to 31497 to resolve issues when using the port-fixer.\nthis port setting is typically for internal Kubernetes configuration only, and in most cases, it does not need to be modified.\nif it is necessary to change the game server port where you connect to the game, update the \"service.port\" value accordingly.",
+          "description": "factorio game server port\nthe default game port (34197) has been changed to 31497 to resolve issues when using the port-fixer.\nthis port setting is typically for internal Kubernetes configuration only, and in most cases, it does not need to be modified.\nif it is necessary to change the game server port where you connect to the game, update the \"service.port\" value accordingly.\nFactorio Game Server port",
           "title": "port",
           "type": "integer"
         },
         "rcon_port": {
           "default": 27015,
-          "description": "factorio game rcon port\nthis port setting is typically for internal Kubernetes configuration only, and in most cases, it does not need to be modified.\nif it is necessary to change the rcon server port where you connect to it, update the \"rcon.port\" value accordingly.",
+          "description": "factorio game rcon port\nthis port setting is typically for internal Kubernetes configuration only, and in most cases, it does not need to be modified.\nif it is necessary to change the rcon server port where you connect to it, update the \"rcon.port\" value accordingly.\nFactorio Server RCON port",
           "title": "rcon_port",
           "type": "integer"
         },
         "save_name": {
           "default": "replaceMe",
-          "description": "name to use for the save file",
+          "description": "Factorio save name",
           "title": "save_name",
           "type": "string"
         },
         "update_mods_on_start": {
           "default": false,
-          "description": "if mods should be updated before starting the server",
+          "description": "Update mods on server start",
           "title": "update_mods_on_start",
           "type": "boolean"
         }
@@ -144,27 +146,28 @@
     },
     "hostNetworkEnabled": {
       "default": true,
+      "description": "Sets the pod to run on the host network. This is required for the port-fixer to work properly, but it can be disabled if you don't need it.",
       "title": "hostNetworkEnabled",
       "type": "boolean"
     },
     "image": {
       "additionalProperties": false,
-      "description": "### Image Configuration ####\n#\n#\n#\n#",
       "properties": {
         "pullPolicy": {
           "default": "Always",
-          "description": "# Container image pull policy",
+          "description": "Factorio image pull policy",
           "title": "pullPolicy",
           "type": "string"
         },
         "repository": {
           "default": "factoriotools/factorio",
+          "description": "Factorio image repository",
           "title": "repository",
           "type": "string"
         },
         "tag": {
-          "default": "latest",
-          "description": "# Overrides the image tag whose default is the chart appVersion.",
+          "default": "stable",
+          "description": "Factorio image tag (immutable tags are recommended) Overrides the image tag whose default is the chart appVersion.",
           "title": "tag",
           "type": "string"
         }
@@ -179,28 +182,29 @@
     },
     "import_save": {
       "additionalProperties": false,
+      "description": "### Factorio Save Importer Configuration ####\nImport Save Parameters",
       "properties": {
         "enabled": {
           "default": true,
-          "description": "enable save importer",
+          "description": "Enable save importer",
           "title": "enabled",
           "type": "boolean"
         },
         "reimport_every_time": {
           "default": false,
-          "description": "reimport from the source_url AND OVERWRITE PREVIOUS SAVE every time pod is initialized. good for demos or testing",
+          "description": "Reimport from the source_url AND OVERWRITE PREVIOUS SAVE every time pod is initialized. good for demos or testing",
           "title": "reimport_every_time",
           "type": "boolean"
         },
         "reimport_on_change": {
           "default": false,
-          "description": "reimport from the source_url if the checksum of the file changes",
+          "description": "Reimport from the source_url if the checksum of the file changes",
           "title": "reimport_on_change",
           "type": "boolean"
         },
         "source_url": {
           "default": "",
-          "description": "url to download save from (http or https only).\nif no url is specified, saves can still be manually imported by placing the file in \"/factorio/save-importer/import\"",
+          "description": "URL to download save from (http or https only). If no url is specified, saves can still be manually imported by placing the file in \"/factorio/save-importer/import\"",
           "title": "source_url",
           "type": "string"
         }
@@ -216,27 +220,28 @@
     },
     "map_gen_settings": {
       "additionalProperties": false,
-      "description": "#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#",
+      "description": "#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n### Factorio Map Generation Settings ####\nMap Generation Settings Parameters",
       "properties": {
         "autoplace_controls": {
           "additionalProperties": false,
+          "description": "Override default ore, trees and enemy bases frequency, size and richness. Leave empty for default values. Supports including modded ores",
           "required": [],
           "title": "autoplace_controls",
           "type": "object"
         },
         "cliff_settings": {
           "additionalProperties": false,
-          "description": "   water:\n     frequency: 1\n     size: 1\n   coal:\n     frequency: 1\n     size: 1\n     richness: 1\n   stone:\n     frequency: 1\n     size: 1\n     richness: 1\n   copper-ore:\n     frequency: 1\n     size: 1\n     richness: 1\n   iron-ore:\n     frequency: 1\n     size: 1\n     richness: 1\n   uranium-ore:\n     frequency: 1\n     size: 1\n     richness: 1\n   crude-oil:\n     frequency: 1\n     size: 1\n     richness: 1\n   trees:\n     frequency: 1\n     size: 1\n   enemy-base:\n     frequency: 1\n     size: 1",
+          "description": "   water:\n     frequency: 1\n     size: 1\n   coal:\n     frequency: 1\n     size: 1\n     richness: 1\n   stone:\n     frequency: 1\n     size: 1\n     richness: 1\n   copper-ore:\n     frequency: 1\n     size: 1\n     richness: 1\n   iron-ore:\n     frequency: 1\n     size: 1\n     richness: 1\n   uranium-ore:\n     frequency: 1\n     size: 1\n     richness: 1\n   crude-oil:\n     frequency: 1\n     size: 1\n     richness: 1\n   trees:\n     frequency: 1\n     size: 1\n   enemy-base:\n     frequency: 1\n     size: 1\nOverride default cliff prototype name",
           "properties": {
             "cliff_elevation_0": {
               "default": 10,
-              "description": "Elevation of first row of cliffs",
+              "description": "Override elevation of first row of cliffs",
               "title": "cliff_elevation_0",
               "type": "integer"
             },
             "cliff_elevation_interval": {
               "default": 40,
-              "description": "Elevation difference between successive rows of cliffs.\nThis is inversely proportional to frequency in the map generation GUI. Specifically, when set from the GUI the value is 40 / frequency.",
+              "description": "Elevation difference between successive rows of cliffs.\nThis is inversely proportional to frequency in the map generation GUI. Specifically, when set from the GUI the value is 40 / frequency.\nOverride elevation difference between successive rows of cliffs",
               "title": "cliff_elevation_interval",
               "type": "integer"
             },
@@ -270,30 +275,35 @@
         },
         "peaceful_mode": {
           "default": false,
+          "description": "Enable Peaceful mode",
           "title": "peaceful_mode",
           "type": "boolean"
         },
         "property_expression_names": {
           "additionalProperties": false,
-          "description": "Overrides for property value generators (map type)\nLeave elevation blank to get normal terrain.\nUse 'elevation': 'elevation_island' to get an island.\nMoisture and terrain type are also controlled via this.\n\"control:moisture:frequency is the inverse of the moisture scale in the map generator GUI.\"\n\"control:moisture:bias is the moisture bias in the map generator GUI.\"\n\"control:aux:frequency is the inverse of the terrain type scale in the map generator GUI.\"\n\"control:aux:bias is the teraain type bias in the map generator GUI.\"",
+          "description": "Overrides for property value generators (map type)\nLeave elevation blank to get normal terrain.\nUse 'elevation': 'elevation_island' to get an island.\nMoisture and terrain type are also controlled via this.\n\"control:moisture:frequency is \"\n\"control:moisture:bias \"\n\"control:aux:frequency is \"\n\"control:aux:bias is .\"\nOverrides for property value generators (map type)",
           "properties": {
             "control:aux:bias": {
               "default": "0",
+              "description": "The terrain type bias in the map generator GUI",
               "title": "control:aux:bias",
               "type": "string"
             },
             "control:aux:frequency": {
               "default": "1",
+              "description": "The inverse of the terrain type scale in the map generator GUI",
               "title": "control:aux:frequency",
               "type": "string"
             },
             "control:moisture:bias": {
               "default": "0",
+              "description": "The moisture bias in the map generator GUI",
               "title": "control:moisture:bias",
               "type": "string"
             },
             "control:moisture:frequency": {
               "default": "1",
+              "description": "The inverse of the moisture scale in the map generator GUI",
               "title": "control:moisture:frequency",
               "type": "string"
             }
@@ -320,6 +330,7 @@
           "type": "integer"
         },
         "starting_points": {
+          "description": "Starting point coordinates for the map.",
           "items": {
             "anyOf": [
               {
@@ -371,18 +382,20 @@
     },
     "map_settings": {
       "additionalProperties": false,
-      "description": "#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#",
+      "description": "#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n### Factorio Map Settings Configuration ####",
       "properties": {
         "asteroids": {
           "additionalProperties": false,
           "properties": {
             "max_ray_portals_expanded_per_tick": {
               "default": 100,
+              "description": "Controls the performance limit or expansion rate for ray portals/asteroid pathing calculations per game tick during space travel and asteroid belt generation",
               "title": "max_ray_portals_expanded_per_tick",
               "type": "integer"
             },
             "spawning_rate": {
               "default": 1,
+              "description": "Asteroid Spawing rate",
               "title": "spawning_rate",
               "type": "integer"
             }
@@ -399,11 +412,13 @@
           "properties": {
             "spoil_time_modifier": {
               "default": 1,
+              "description": "A value in range [0.01, 100] that modifies the time it takes for items to spoil. 1 is normal, 0.5 is half as long, 2 is twice as long, etc",
               "title": "spoil_time_modifier",
               "type": "integer"
             },
             "technology_price_multiplier": {
               "default": 1,
+              "description": "Research cost multiplier",
               "title": "technology_price_multiplier",
               "type": "integer"
             }
@@ -417,24 +432,29 @@
         },
         "enemy_evolution": {
           "additionalProperties": false,
+          "description": "These values represent a percentual increase in evolution. This means a value of 0.1 would increase evolution by 10%.",
           "properties": {
             "destroy_factor": {
               "default": 0.002,
+              "description": "The amount evolution naturally progresses by every second",
               "title": "destroy_factor",
               "type": "number"
             },
             "enabled": {
               "default": true,
+              "description": "Whether enemy evolution is enabled at all",
               "title": "enabled",
               "type": "boolean"
             },
             "pollution_factor": {
               "default": 9e-7,
+              "description": "The amount evolution progresses for every unit of pollution",
               "title": "pollution_factor",
               "type": "number"
             },
             "time_factor": {
               "default": 0.000004,
+              "description": "The amount evolution naturally progresses by every second",
               "title": "time_factor",
               "type": "number"
             }
@@ -458,16 +478,19 @@
             },
             "enabled": {
               "default": true,
+              "description": "Whether enemy expansion is enabled at all",
               "title": "enabled",
               "type": "boolean"
             },
             "enemy_building_influence_radius": {
               "default": 2,
+              "description": "The game checks a square region extending ${value} chunks out in all directions when calculating whether biters can expand into a new location",
               "title": "enemy_building_influence_radius",
               "type": "integer"
             },
             "friendly_base_influence_radius": {
               "default": 2,
+              "description": "Distance in chunks from the furthest base around to prevent expansions from being too close to existing bases",
               "title": "friendly_base_influence_radius",
               "type": "integer"
             },
@@ -478,16 +501,19 @@
             },
             "max_expansion_cooldown": {
               "default": 216000,
+              "description": "The default maximum expansion cooldown (max_expansion_cooldown) is 216,000 ticks (1 hour)",
               "title": "max_expansion_cooldown",
               "type": "integer"
             },
             "max_expansion_distance": {
               "default": 7,
+              "description": "Distance in chunks from the furthest base around to prevent expansions from reaching too far into the player's territory",
               "title": "max_expansion_distance",
               "type": "integer"
             },
             "min_expansion_cooldown": {
               "default": 14400,
+              "description": "The default minimum expansion cooldown (min_expansion_cooldown) is 14,400 ticks (4 minutes)",
               "title": "min_expansion_cooldown",
               "type": "integer"
             },
@@ -508,11 +534,13 @@
             },
             "settler_group_max_size": {
               "default": 20,
+              "description": "The maximum size of a biter group sent out to create a new base",
               "title": "settler_group_max_size",
               "type": "integer"
             },
             "settler_group_min_size": {
               "default": 5,
+              "description": "The minimum number of biters/spitters required to form a group tasked with expanding and building a new enemy base",
               "title": "settler_group_min_size",
               "type": "integer"
             }
@@ -775,55 +803,65 @@
         },
         "pollution": {
           "additionalProperties": false,
+          "description": "These values are for the time frame of one second (60 ticks).",
           "properties": {
             "ageing": {
               "default": 1,
+              "description": "Pollution setting that controls how much pollution is naturally absorbed and cleaned up by terrain tiles per tick",
               "title": "ageing",
               "type": "integer"
             },
             "diffusion_ratio": {
               "default": 0.02,
-              "description": "these are values for 60 ticks (1 simulated second)\namount that is diffused to neighboring chunk",
+              "description": "these are values for 60 ticks (1 simulated second)\namount that is diffused to neighboring chunk\nThe amount of pollution diffused into neighboring chunks per second",
               "title": "diffusion_ratio",
               "type": "number"
             },
             "enabled": {
               "default": true,
+              "description": "Enable pollution.",
               "title": "enabled",
               "type": "boolean"
             },
             "enemy_attack_pollution_consumption_modifier": {
               "default": 1,
+              "description": "Map generation setting that controls how much pollution an enemy spawner needs to absorb before adding a unit to an attack group",
               "title": "enemy_attack_pollution_consumption_modifier",
               "type": "integer"
             },
             "expected_max_per_chunk": {
               "default": 150,
+              "description": "The maximum expected pollution value that can be visualised inside a single chunk on the map",
               "title": "expected_max_per_chunk",
               "type": "integer"
             },
             "max_pollution_to_restore_trees": {
               "default": 20,
+              "description": "Hidden map setting dictates the environmental threshold required for damaged trees to naturally recover",
               "title": "max_pollution_to_restore_trees",
               "type": "integer"
             },
             "min_pollution_to_damage_trees": {
               "default": 60,
+              "description": "Map prototype setting that defines the minimum pollution threshold required in a single chunk before trees can begin taking environmental damage",
               "title": "min_pollution_to_damage_trees",
               "type": "integer"
             },
             "min_to_diffuse": {
               "default": 15,
+              "description": "Map setting that defines the minimum amount of pollution (measured in Pollution Units, or PUs) required on a chunk before it starts spreading to neighboring chunks",
               "title": "min_to_diffuse",
               "type": "integer"
             },
             "min_to_show_per_chunk": {
               "default": 50,
+              "description": "Map configuration variable within the PollutionMapSettings that dictates the minimum visual threshold for pollution rendering on the map",
               "title": "min_to_show_per_chunk",
               "type": "integer"
             },
             "pollution_per_tree_damage": {
               "default": 50,
+              "description": "Tree damage from pollution is calculated based on how much pollution is in a chunk above the minimum threshold of 60 units",
               "title": "pollution_per_tree_damage",
               "type": "integer"
             },
@@ -834,6 +872,7 @@
             },
             "pollution_with_max_forest_damage": {
               "default": 150,
+              "description": "Pollution threshold inside a single 32x32 chunk at which the probability for trees to receive environmental damage maxes out",
               "title": "pollution_with_max_forest_damage",
               "type": "integer"
             }
@@ -937,66 +976,79 @@
           "properties": {
             "max_gathering_unit_groups": {
               "default": 30,
+              "description": "A map setting that defines the maximum number of automatically created unit groups gathering for an attack at any time",
               "title": "max_gathering_unit_groups",
               "type": "integer"
             },
             "max_group_gathering_time": {
               "default": 36000,
+              "description": "The maximum time (measured in game ticks) that a pollution-triggered biters/spitters attack group waits and gathers before marching toward a target",
               "title": "max_group_gathering_time",
               "type": "integer"
             },
             "max_group_member_fallback_factor": {
               "default": 3,
+              "description": "A unit group setting that controls when a lagging biter or spitter forces the entire attack group to slow down",
               "title": "max_group_member_fallback_factor",
               "type": "integer"
             },
             "max_group_radius": {
               "default": 30,
+              "description": "The maximum spatial limit for an enemy unit attack group",
               "title": "max_group_radius",
               "type": "integer"
             },
             "max_group_slowdown_factor": {
               "default": 0.3,
+              "description": "A map and unit group setting that controls how much an entire enemy group slows down when members fall too far behind",
               "title": "max_group_slowdown_factor",
               "type": "number"
             },
             "max_member_slowdown_when_ahead": {
               "default": 0.6,
+              "description": "A dynamic map and prototype property used to manage biter behavior within an attack group",
               "title": "max_member_slowdown_when_ahead",
               "type": "number"
             },
             "max_member_speedup_when_behind": {
               "default": 1.4,
+              "description": "A dynamic map and prototype property used to manage biter behavior within an attack group",
               "title": "max_member_speedup_when_behind",
               "type": "number"
             },
             "max_unit_group_size": {
               "default": 200,
+              "description": "The maximum number of enemy biters or spitters that can gather into a single automatically created attack group (swarm)",
               "title": "max_unit_group_size",
               "type": "integer"
             },
             "max_wait_time_for_late_members": {
               "default": 7200,
+              "description": "A unit_group parameter that controls how long (measured in game ticks) an enemy attack or expansion group waits for stragglers after it finishes gathering",
               "title": "max_wait_time_for_late_members",
               "type": "integer"
             },
             "member_disown_distance": {
               "default": 10,
+              "description": "A engine setting that dictates how enemy biter groups behave when a member falls behind during movement",
               "title": "member_disown_distance",
               "type": "integer"
             },
             "min_group_gathering_time": {
               "default": 3600,
+              "description": "The minimum time (measured in game ticks) that a pollution-triggered biters/spitters attack group waits and gathers before marching toward a target",
               "title": "min_group_gathering_time",
               "type": "integer"
             },
             "min_group_radius": {
               "default": 5,
+              "description": "The minimum spatial limit for an enemy unit attack group",
               "title": "min_group_radius",
               "type": "integer"
             },
             "tick_tolerance_when_member_arrives": {
               "default": 60,
+              "description": "A map setting that determines how many ticks a unit group (like a biter attack squad) will wait after a lagging biter catches up before the group resumes moving.",
               "title": "tick_tolerance_when_member_arrives",
               "type": "integer"
             }
@@ -1036,10 +1088,11 @@
     },
     "mods": {
       "additionalProperties": false,
-      "description": "### Factorio application configuration ####\n#\n#\n#\n#",
+      "description": "### Factorio application configuration ####\nMods Parameters",
       "properties": {
         "enabled": {
           "default": false,
+          "description": "Enable mods",
           "title": "enabled",
           "type": "boolean"
         },
@@ -1073,7 +1126,7 @@
           "type": "object"
         },
         "portal": {
-          "description": "in order to use the mods portal you will need to specify the username and token in the server_settings.",
+          "description": "in order to use the mods portal you will need to specify the username and token in the server_settings.\nList of official mods to be downloaded from Factorio Mod Portal",
           "items": {
             "required": []
           },
@@ -1081,7 +1134,7 @@
           "type": "array"
         },
         "unofficial": {
-          "description": " - name: factorissimo-2-notnotmelon\n   version: 3.5.11\nunofficial section is meant to just allow you to download and place folders into the mods folder.\nwe will not check version compatibility automatically with these downloads.\nyou can encounter an error if the file names dont match what the mod is expecting for example\nError Util.cpp:83: Failed to load mod \"Squeak-Through\": Filename of mod\n/factorio/mods/Squeak-Through.zip doesn't match the expected Squeak Through_1.8.2.zip (case sensitive!)",
+          "description": " - name: factorissimo-2-notnotmelon\n   version: 3.5.11\nunofficial section is meant to just allow you to download and place folders into the mods folder.\nwe will not check version compatibility automatically with these downloads.\nyou can encounter an error if the file names dont match what the mod is expecting for example\nError Util.cpp:83: Failed to load mod \"Squeak-Through\": Filename of mod\n/factorio/mods/Squeak-Through.zip doesn't match the expected Squeak Through_1.8.2.zip (case sensitive!)\nList of unofficial mods name and url to download into the mods folder",
           "items": {
             "required": []
           },
@@ -1100,17 +1153,20 @@
     },
     "nodeSelector": {
       "additionalProperties": false,
+      "description": "nodeSelector Node labels for pod assignment",
       "required": [],
       "title": "nodeSelector",
       "type": "object"
     },
     "persistence": {
       "additionalProperties": false,
-      "description": "### Persistence Configuration ####\n#\n#\n#\n#\n#\n#\n#\n# Sets the data persistence volume configuration\n# IMPORTANT: If you do not setup a PV all your savegames will be lost on pod recreation or helm upgrade",
+      "description": "### Persistence Configuration ####\n# Sets the data persistence volume configuration\n# IMPORTANT: If you do not setup a PV all your savegames will be lost on pod recreation or helm upgrade",
       "properties": {
         "annotations": {
-          "additionalProperties": false,
-          "description": "# If you have annotations to spin up a PV i.e. the location. Remove the curly braces",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "If you have annotations to spin up a PV i.e. the location. Remove the curly braces",
           "required": [],
           "title": "annotations",
           "type": "object"
@@ -1120,6 +1176,7 @@
           "properties": {
             "Size": {
               "default": "1Gi",
+              "description": "Size of the Persistent Volume Claim",
               "title": "Size",
               "type": "string"
             }
@@ -1132,19 +1189,22 @@
         },
         "enabled": {
           "default": true,
+          "description": "Enable persistence using Persistent Volume Claims",
           "title": "enabled",
           "type": "boolean"
         },
         "labels": {
-          "additionalProperties": false,
-          "description": "# If you have additional labels to apply to the volume",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "If you have additional labels to apply to the volume",
           "required": [],
           "title": "labels",
           "type": "object"
         },
         "storageClassName": {
           "default": "",
-          "description": "# If you like to use a specific storageClassName, set the name. Leave it blank for the default class",
+          "description": "If you like to use a specific storageClassName, set the name. Leave it blank for the default class",
           "title": "storageClassName",
           "type": "string"
         }
@@ -1160,7 +1220,8 @@
       "type": "object"
     },
     "podSecurityContext": {
-      "additionalProperties": false,
+      "additionalProperties": true,
+      "description": "See Factorio Tools [Dockerfile](https://github.com/factoriotools/factorio-docker/blob/master/docker/Dockerfile)",
       "properties": {
         "runAsGroup": {
           "default": 845,
@@ -1182,11 +1243,11 @@
     },
     "port_fixer": {
       "additionalProperties": false,
-      "description": "#\n#\n#\n#\n#\n#",
+      "description": "#\n#\n#\n#\n#\n#\n### Factorio Port Fixer Configuration ####\nPort Fixer Parameters",
       "properties": {
         "enabled": {
           "default": false,
-          "description": "Adds an extra container that tries to help with connection issues via the public server browser.\nThis is especially useful when you can’t set up outgoing static port mappings and see log messages like these:\n\u003e Warning ServerRouter.cpp:541: Received own address message reply with conflicting address (got IP ADDR:({\u003cip\u003e:19296}), expected IP ADDR:({\u003cip\u003e:58037}))\n\u003e Warning ServerMultiplayerManager.cpp:651: Determining own address has failed. Best guess: IP ADDR:({\u003cip\u003e:58037})\n\u003e Warning ServerRouter.cpp:541: Received own address message reply with conflicting address (got IP ADDR:({\u003cip\u003e:19297}), expected IP ADDR:({\u003cip\u003e:58037}))\n\u003e Warning ServerRouter.cpp:541: Received own address message reply with conflicting address (got IP ADDR:({\u003cip\u003e:24105}), expected IP ADDR:({\u003cip\u003e:58037}))\nNote: Port forwarding for incoming traffic still needs to be set up properly for this to work.\nFor more info, check out:\n  - https://github.com/SQLJames/factorio-server-charts/issues/15",
+          "description": "Adds an extra container that tries to help with connection issues via the public server browser.\nThis is especially useful when you can’t set up outgoing static port mappings and see log messages like these:\n\u003e Warning ServerRouter.cpp:541: Received own address message reply with conflicting address (got IP ADDR:({\u003cip\u003e:19296}), expected IP ADDR:({\u003cip\u003e:58037}))\n\u003e Warning ServerMultiplayerManager.cpp:651: Determining own address has failed. Best guess: IP ADDR:({\u003cip\u003e:58037})\n\u003e Warning ServerRouter.cpp:541: Received own address message reply with conflicting address (got IP ADDR:({\u003cip\u003e:19297}), expected IP ADDR:({\u003cip\u003e:58037}))\n\u003e Warning ServerRouter.cpp:541: Received own address message reply with conflicting address (got IP ADDR:({\u003cip\u003e:24105}), expected IP ADDR:({\u003cip\u003e:58037}))\nNote: Port forwarding for incoming traffic still needs to be set up properly for this to work.\nFor more info, check out:\n  - https://github.com/SQLJames/factorio-server-charts/issues/15\nEnable the Factorio Port Fixer",
           "title": "enabled",
           "type": "boolean"
         },
@@ -1195,16 +1256,19 @@
           "properties": {
             "pullPolicy": {
               "default": "Always",
+              "description": "Factorio port fixer image pull policy",
               "title": "pullPolicy",
               "type": "string"
             },
             "repository": {
               "default": "ghcr.io/zcube/factorio-port-fixer",
+              "description": "Factorio port-fixer image repository",
               "title": "repository",
               "type": "string"
             },
             "tag": {
               "default": "latest",
+              "description": "Factorio port fixer image tag (immutable tags are recommended)",
               "title": "tag",
               "type": "string"
             }
@@ -1219,6 +1283,7 @@
         },
         "port": {
           "default": "",
+          "description": "(int) Factorio port to announce via port-fixer, defaults to service.port",
           "title": "port",
           "type": "string"
         }
@@ -1304,38 +1369,45 @@
     },
     "rconAPI": {
       "additionalProperties": false,
-      "description": "#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#",
+      "description": "#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\nRCON API Parameters",
       "properties": {
         "enabled": {
           "default": false,
+          "description": "Enable or disable the RCON API service",
           "title": "enabled",
           "type": "boolean"
         },
         "grpcPort": {
           "default": 30111,
+          "description": "Internal port on which the gRPC API for RCON is exposed",
           "title": "grpcPort",
           "type": "integer"
         },
         "httpPort": {
           "default": 30110,
+          "description": "Internal port on which the HTTP API for RCON is exposed",
           "title": "httpPort",
           "type": "integer"
         },
         "image": {
           "additionalProperties": false,
+          "description": "RCON API container image configuration",
           "properties": {
             "pullPolicy": {
               "default": "Always",
+              "description": "RCON-API image pull policy",
               "title": "pullPolicy",
               "type": "string"
             },
             "repository": {
               "default": "ghcr.io/nekomeowww/factorio-rcon-api",
+              "description": "RCON-API image repository",
               "title": "repository",
               "type": "string"
             },
             "tag": {
               "default": "latest",
+              "description": "RCON-API image tag (immutable tags are recommended)",
               "title": "tag",
               "type": "string"
             }
@@ -1353,6 +1425,7 @@
           "properties": {
             "annotations": {
               "additionalProperties": false,
+              "description": "Additional annotations for the Ingress resource",
               "properties": {
                 "nginx.ingress.kubernetes.io/backend-protocol": {
                   "default": "GRPC",
@@ -1374,16 +1447,19 @@
             },
             "className": {
               "default": "nginx",
+              "description": "Ingress class name for selecting the Ingress controller (e.g., nginx, cilium)",
               "title": "className",
               "type": "string"
             },
             "enabled": {
               "default": true,
+              "description": "Enable or disable the Ingress for the RCON API service",
               "title": "enabled",
               "type": "boolean"
             },
             "hostname": {
               "default": "factorio.example.com",
+              "description": "Hostname for the RCON API Ingress",
               "title": "hostname",
               "type": "string"
             },
@@ -1392,11 +1468,13 @@
               "properties": {
                 "enabled": {
                   "default": false,
+                  "description": "Enable or disable TLS for the Ingress",
                   "title": "enabled",
                   "type": "boolean"
                 },
                 "secretName": {
                   "default": "cert-factorio.example.com",
+                  "description": "Kubernetes Secret name for TLS certificates used by the Ingress",
                   "title": "secretName",
                   "type": "string"
                 }
@@ -1420,7 +1498,7 @@
           "type": "object"
         },
         "ipFamilies": {
-          "description": "# List of IP families (e.g. IPv4, IPv6) assigned to the service. This field is usually assigned automatically\n# based on cluster configuration and the ipFamilyPolicy field.\n# Ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/",
+          "description": "# List of IP families (e.g. IPv4, IPv6) assigned to the service. This field is usually assigned automatically\n# based on cluster configuration and the ipFamilyPolicy field.\n# Ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/\nList of IP families (e.g., IPv4, IPv6) assigned to the RCON API service. This field is usually assigned automatically based on cluster configuration and the ipFamilyPolicy field.",
           "items": {
             "anyOf": [
               {
@@ -1434,18 +1512,20 @@
         },
         "ipFamilyPolicy": {
           "default": "SingleStack",
-          "description": "# Represents the dual-stack-ness requested or required by this Service. Possible values are\n# SingleStack, PreferDualStack or RequireDualStack.\n# The ipFamilies and clusterIPs fields depend on the value of this field.\n# Ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/",
+          "description": "# Represents the dual-stack-ness requested or required by this Service. Possible values are\n# SingleStack, PreferDualStack or RequireDualStack.\n# The ipFamilies and clusterIPs fields depend on the value of this field.\n# Ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/\nDetermines how cluster IPs are allocated for the RCON API service. Possible values are SingleStack, PreferDualStack, or RequireDualStack.",
           "title": "ipFamilyPolicy",
           "type": "string"
         },
         "serviceAnnotations": {
           "additionalProperties": false,
+          "description": "Annotations to add to the RCON API service",
           "required": [],
           "title": "serviceAnnotations",
           "type": "object"
         },
         "type": {
           "default": "ClusterIP",
+          "description": "Kubernetes service type for the RCON API (e.g., ClusterIP, NodePort, LoadBalancer)",
           "title": "type",
           "type": "string"
         }
@@ -1466,16 +1546,16 @@
     },
     "replicaCount": {
       "default": 1,
+      "description": "replicaCount Number of replicas to create (only 1 is supported)",
       "title": "replicaCount",
       "type": "integer"
     },
     "resources": {
       "additionalProperties": false,
-      "description": "# Compute Resources required by the operator container",
       "properties": {
         "limits": {
           "additionalProperties": false,
-          "description": "# If you like to limit factiorio resources",
+          "description": "If you like to limit Factorio resources",
           "required": [],
           "title": "limits",
           "type": "object"
@@ -1486,11 +1566,13 @@
           "properties": {
             "cpu": {
               "default": "500m",
+              "description": "The requested cpu for the Factorio containers",
               "title": "cpu",
               "type": "string"
             },
             "memory": {
               "default": "512Mi",
+              "description": "The requested memory for the Factorio containers",
               "title": "memory",
               "type": "string"
             }
@@ -1512,7 +1594,7 @@
     },
     "securityContext": {
       "additionalProperties": false,
-      "description": "https://github.com/factoriotools/factorio-docker/blob/master/docker/Dockerfile",
+      "description": "Useful for fixing file permissions. See official [docs](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/).",
       "properties": {
         "fsGroup": {
           "default": 845,
@@ -1528,17 +1610,17 @@
     },
     "serverPassword": {
       "additionalProperties": false,
-      "description": "#\n#",
+      "description": "### Factorio Server Password Configuration ####\nFactorio Server Password Parameters",
       "properties": {
         "game_password": {
           "default": "",
-          "description": "password required to log into the factorio server",
+          "description": "Password required to log into the factorio server. Ignored if `serverPassword.passwordSecret` is set",
           "title": "game_password",
           "type": "string"
         },
         "passwordSecret": {
           "default": "",
-          "description": "Existing Secret containing a `game_password` data entry",
+          "description": "Existing k8s Secret containing a `game_password` data entry",
           "title": "passwordSecret",
           "type": "string"
         }
@@ -1552,7 +1634,7 @@
     },
     "server_settings": {
       "additionalProperties": false,
-      "description": "#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#",
+      "description": "### Factorio Server Settings Configuration ####\nServer Settings Parameters",
       "properties": {
         "afk_autokick_interval": {
           "default": 0,
@@ -1598,7 +1680,7 @@
         },
         "description": {
           "default": "Factorio running on Kubernetes",
-          "description": "Your Instance Description",
+          "description": "Description of the game that will appear in the listing",
           "title": "description",
           "type": "string"
         },
@@ -1610,7 +1692,7 @@
         },
         "max_heartbeats_per_second": {
           "default": 60,
-          "description": "Network tick rate. Maximum rate game updates packets are sent at before bundling them together.\nMinimum value is 6, maximum value is 240.",
+          "description": "Network tick rate. Maximum rate game updates packets are sent at before bundling them together. Minimum value is 6, maximum value is 240.",
           "title": "max_heartbeats_per_second",
           "type": "integer"
         },
@@ -1661,13 +1743,13 @@
         },
         "name": {
           "default": "Factorio",
-          "description": "Your Instance Name",
+          "description": "Name of the game as it will appear in the game listing",
           "title": "name",
           "type": "string"
         },
         "non_blocking_saving": {
           "default": false,
-          "description": " Highly experimental feature, enable only at your own\n risk of losing your saves. On UNIX systems, server will fork itself to create an\n autosave. Autosaving on connected Windows clients will be disabled regardless of\n autosave_only_on_server option.",
+          "description": "Highly experimental feature, enable only at your own risk of losing your saves. On UNIX systems, server will fork itself to create an autosave. Autosaving on connected Windows clients will be disabled regardless of autosave_only_on_server option.",
           "title": "non_blocking_saving",
           "type": "boolean"
         },
@@ -1684,6 +1766,7 @@
           "type": "boolean"
         },
         "tags": {
+          "description": "Tags for the game that will appear in the listing",
           "items": {
             "anyOf": [
               {
@@ -1700,7 +1783,7 @@
         },
         "visibility": {
           "additionalProperties": false,
-          "description": "Game visibility",
+          "description": "Game visibility parameters. See Factorio documentation for more details: https://wiki.factorio.com/Multiplayer#How_to_list_a_server-hosted_game_on_the_matching_server",
           "properties": {
             "lan": {
               "default": true,
@@ -1754,11 +1837,13 @@
     },
     "service": {
       "additionalProperties": false,
-      "description": "### Service Configuration ####\n#\n#\n#\n#\n#\n#\n# The service is a kind tricky, so factorio uses UDP, but not every cloud provider is able to route UDP traffic.\n# I.e. your cloud provider has LoadBalancers without the ability for UDP protocol. Furthermore kubectl ist not able to route UDP Traffic\n# ref: https://github.com/kubernetes/kubernetes/issues/47862\n# You have to expose factorio on a NodePort and map a port between 30000 and 32767, but the native port is 34197. So you have always to specify the port in factorio.\n# The best way ist to define a ClusterIP service and define one or more externalIPs. Of course this IPs must be available on the node the factorio pod runs on!",
+      "description": "# The service is a kind tricky, so factorio uses UDP, but not every cloud provider is able to route UDP traffic.\n# I.e. your cloud provider has LoadBalancers without the ability for UDP protocol. Furthermore kubectl ist not able to route UDP Traffic\n# ref: https://github.com/kubernetes/kubernetes/issues/47862\n# You have to expose factorio on a NodePort and map a port between 30000 and 32767, but the native port is 34197. So you have always to specify the port in factorio.\n# The best way ist to define a ClusterIP service and define one or more externalIPs. Of course this IPs must be available on the node the factorio pod runs on!",
       "properties": {
         "annotations": {
-          "additionalProperties": false,
-          "description": "# ClusterIp setup\nClusterIP:\n  port: 34197\n# LoadBalancer setup\ntype: LoadBalancer\nexternalTrafficPolicy: Cluster",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "# ClusterIp setup\nClusterIP:\n  port: 34197\n# LoadBalancer setup\ntype: LoadBalancer\nexternalTrafficPolicy: Cluster\nAdditional custom annotations for Factorio service",
           "required": [],
           "title": "annotations",
           "type": "object"
@@ -1782,13 +1867,24 @@
           "title": "ipFamilyPolicy",
           "type": "string"
         },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Additional custom labels for Factorio service",
+          "required": [],
+          "title": "labels",
+          "type": "object"
+        },
         "port": {
           "default": 31497,
+          "description": "Factorio service port",
           "title": "port",
           "type": "integer"
         },
         "type": {
           "default": "NodePort",
+          "description": "Factorio service type. If you use \"type: NodePort\" set the port to a value you like in the range of 30000-32767. Leave it blank for a random port",
           "title": "type",
           "type": "string"
         }
@@ -1797,18 +1893,18 @@
         "type",
         "ipFamilyPolicy",
         "ipFamilies",
-        "port",
-        "annotations"
+        "port"
       ],
       "title": "service",
       "type": "object"
     },
     "strategy": {
       "additionalProperties": false,
-      "description": "# Strategy used to replace old pods\n# IMPORTANT: use with care, it is suggested to leave as that for upgrade purposes\n# ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy",
+      "description": "# IMPORTANT: use with care, it is suggested to leave as that for upgrade purposes\n# ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy\nStrategy Parameters",
       "properties": {
         "type": {
           "default": "Recreate",
+          "description": "Strategy used to replace old pods",
           "title": "type",
           "type": "string"
         }
@@ -1828,6 +1924,7 @@
       "type": "array"
     },
     "white_list": {
+      "description": "- \"john_doe\"\n- \"jane_doe\"\nUsername Whitelist",
       "items": {
         "required": []
       },
