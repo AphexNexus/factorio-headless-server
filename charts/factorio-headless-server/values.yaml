@@ -641,6 +641,8 @@ map_settings:
     min_expansion_cooldown: 14400
     # -- The default maximum expansion cooldown (max_expansion_cooldown) is 216,000 ticks (1 hour)
     max_expansion_cooldown: 216000
+    evolution_group_size_factor: 4
+    min_expansion_distance: 3
   unit_group:
     # -- The minimum time (measured in game ticks) that a pollution-triggered biters/spitters attack group waits and gathers before marching toward a target
     min_group_gathering_time: 3600
