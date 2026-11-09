@@ -212,11 +212,13 @@ The following table lists the configurable parameters of the `factorio` chart an
 | map_settings.enemy_expansion.building_coefficient | float | `0.1` |  |
 | map_settings.enemy_expansion.enabled | bool | `true` | Whether enemy expansion is enabled at all |
 | map_settings.enemy_expansion.enemy_building_influence_radius | int | `2` | The game checks a square region extending ${value} chunks out in all directions when calculating whether biters can expand into a new location |
+| map_settings.enemy_expansion.evolution_group_size_factor | int | `4` |  |
 | map_settings.enemy_expansion.friendly_base_influence_radius | int | `2` | Distance in chunks from the furthest base around to prevent expansions from being too close to existing bases |
 | map_settings.enemy_expansion.max_colliding_tiles_coefficient | float | `0.9` |  |
 | map_settings.enemy_expansion.max_expansion_cooldown | int | `216000` | The default maximum expansion cooldown (max_expansion_cooldown) is 216,000 ticks (1 hour) |
 | map_settings.enemy_expansion.max_expansion_distance | int | `7` | Distance in chunks from the furthest base around to prevent expansions from reaching too far into the player's territory |
 | map_settings.enemy_expansion.min_expansion_cooldown | int | `14400` | The default minimum expansion cooldown (min_expansion_cooldown) is 14,400 ticks (4 minutes) |
+| map_settings.enemy_expansion.min_expansion_distance | int | `3` |  |
 | map_settings.enemy_expansion.neighbouring_base_chunk_coefficient | float | `0.4` |  |
 | map_settings.enemy_expansion.neighbouring_chunk_coefficient | float | `0.5` |  |
 | map_settings.enemy_expansion.other_base_coefficient | int | `2` |  |

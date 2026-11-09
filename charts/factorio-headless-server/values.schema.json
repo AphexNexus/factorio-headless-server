@@ -488,6 +488,11 @@
               "title": "enemy_building_influence_radius",
               "type": "integer"
             },
+            "evolution_group_size_factor": {
+              "default": 4,
+              "title": "evolution_group_size_factor",
+              "type": "integer"
+            },
             "friendly_base_influence_radius": {
               "default": 2,
               "description": "Distance in chunks from the furthest base around to prevent expansions from being too close to existing bases",
@@ -515,6 +520,11 @@
               "default": 14400,
               "description": "The default minimum expansion cooldown (min_expansion_cooldown) is 14,400 ticks (4 minutes)",
               "title": "min_expansion_cooldown",
+              "type": "integer"
+            },
+            "min_expansion_distance": {
+              "default": 3,
+              "title": "min_expansion_distance",
               "type": "integer"
             },
             "neighbouring_base_chunk_coefficient": {
@@ -558,7 +568,9 @@
             "settler_group_min_size",
             "settler_group_max_size",
             "min_expansion_cooldown",
-            "max_expansion_cooldown"
+            "max_expansion_cooldown",
+            "evolution_group_size_factor",
+            "min_expansion_distance"
           ],
           "title": "enemy_expansion",
           "type": "object"
