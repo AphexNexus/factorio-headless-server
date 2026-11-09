@@ -1839,14 +1839,35 @@
       "additionalProperties": false,
       "description": "# The service is a kind tricky, so factorio uses UDP, but not every cloud provider is able to route UDP traffic.\n# I.e. your cloud provider has LoadBalancers without the ability for UDP protocol. Furthermore kubectl ist not able to route UDP Traffic\n# ref: https://github.com/kubernetes/kubernetes/issues/47862\n# You have to expose factorio on a NodePort and map a port between 30000 and 32767, but the native port is 34197. So you have always to specify the port in factorio.\n# The best way ist to define a ClusterIP service and define one or more externalIPs. Of course this IPs must be available on the node the factorio pod runs on!",
       "properties": {
+        "ClusterIP": {
+          "additionalProperties": false,
+          "description": "# ClusterIp setup",
+          "properties": {
+            "port": {
+              "default": 34197,
+              "title": "port",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "port"
+          ],
+          "title": "ClusterIP",
+          "type": "object"
+        },
         "annotations": {
           "additionalProperties": {
             "type": "string"
           },
-          "description": "# ClusterIp setup\nClusterIP:\n  port: 34197\n# LoadBalancer setup\ntype: LoadBalancer\nexternalTrafficPolicy: Cluster\nAdditional custom annotations for Factorio service",
+          "description": "Additional custom annotations for Factorio service",
           "required": [],
           "title": "annotations",
           "type": "object"
+        },
+        "externalTrafficPolicy": {
+          "default": "Cluster",
+          "title": "externalTrafficPolicy",
+          "type": "string"
         },
         "extraLabels": {
           "additionalProperties": {
@@ -1883,8 +1904,8 @@
           "type": "integer"
         },
         "type": {
-          "default": "NodePort",
-          "description": "Factorio service type. If you use \"type: NodePort\" set the port to a value you like in the range of 30000-32767. Leave it blank for a random port",
+          "default": "LoadBalancer",
+          "description": "# LoadBalancer setup",
           "title": "type",
           "type": "string"
         }
@@ -1893,7 +1914,9 @@
         "type",
         "ipFamilyPolicy",
         "ipFamilies",
-        "port"
+        "port",
+        "ClusterIP",
+        "externalTrafficPolicy"
       ],
       "title": "service",
       "type": "object"
