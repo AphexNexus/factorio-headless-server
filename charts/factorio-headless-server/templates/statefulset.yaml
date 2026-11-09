@@ -12,6 +12,7 @@ spec:
   selector:
     matchLabels:
       app: {{ template "factorio-headless-server.fullname" . }}
+  serviceName: {{ template "factorio-headless-server.fullname" . }}
   strategy:
 {{ toYaml .Values.strategy | indent 4 }}
   template:

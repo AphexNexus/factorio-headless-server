@@ -371,12 +371,9 @@ The following table lists the configurable parameters of the `factorio` chart an
 | service.externalTrafficPolicy | string | `"Cluster"` |  |
 | service.extraLabels | object | `{}` | Additional custom labels for Factorio service |
 | service.ipFamilies[0] | string | `"IPv4"` |  |
-| service.ipFamilyPolicy | string | `"SingleStack"` |  |
+| service.ipFamilyPolicy | string | `"SingleStack"` | Factorio service type. If you use "type: NodePort" set the port to a value you like in the range of 30000-32767. Leave it blank for a random port type: NodePort # Represents the dual-stack-ness requested or required by this Service. Possible values are # SingleStack, PreferDualStack or RequireDualStack. # The ipFamilies and clusterIPs fields depend on the value of this field. # Ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/ |
 | service.port | int | `31497` | Factorio service port |
 | service.type | string | `"LoadBalancer"` |  |
-| service.type | string | `"NodePort"` | Factorio service type. If you use "type: NodePort" set the port to a value you like in the range of 30000-32767. Leave it blank for a random port |
-| strategy | object | `{"type":"Recreate"}` | Strategy Parameters |
-| strategy.type | string | `"Recreate"` | Strategy used to replace old pods |
 | tolerations | list | `[]` | Tolerations for pod assignment |
 | white_list | list | `[]` | Username Whitelist |
 

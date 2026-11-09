@@ -42,7 +42,7 @@ nodeSelector: {}
 ## The best way ist to define a ClusterIP service and define one or more externalIPs. Of course this IPs must be available on the node the factorio pod runs on!
 service:
   # -- Factorio service type. If you use "type: NodePort" set the port to a value you like in the range of 30000-32767. Leave it blank for a random port
-  type: NodePort
+  # type: NodePort
   ## Represents the dual-stack-ness requested or required by this Service. Possible values are
   ## SingleStack, PreferDualStack or RequireDualStack.
   ## The ipFamilies and clusterIPs fields depend on the value of this field.
@@ -106,9 +106,9 @@ resources:
 ## IMPORTANT: use with care, it is suggested to leave as that for upgrade purposes
 ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
 # -- Strategy Parameters
-strategy:
+#strategy:
   # -- Strategy used to replace old pods
-  type: Recreate
+  # type: Recreate
   # type: RollingUpdate
   # rollingUpdate:
   #   maxSurge: 1
