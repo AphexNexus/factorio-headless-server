@@ -641,8 +641,12 @@ map_settings:
     min_expansion_cooldown: 14400
     # -- The default maximum expansion cooldown (max_expansion_cooldown) is 216,000 ticks (1 hour)
     max_expansion_cooldown: 216000
+    # -- Exponential factor used to determine the size of the settler group based on the evolution factor.
     evolution_group_size_factor: 4
+    # -- Distance in chunks from the furthest base around to prevent expansions from being too close to existing bases.
     min_expansion_distance: 3
+    # -- Cooldown in ticks for dispatching units when building bases.
+    build_base_unit_dispatch_cooldown: 1800
   unit_group:
     # -- The minimum time (measured in game ticks) that a pollution-triggered biters/spitters attack group waits and gathers before marching toward a target
     min_group_gathering_time: 3600
