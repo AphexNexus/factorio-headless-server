@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "factorio-server-charts.fullname" . }}-save-importer-configmap
+  name: {{ template "factorio-headless-server.fullname" . }}-save-importer-configmap
   labels:
-    app: {{ template "factorio-server-charts.fullname" . }}
-    chart: {{ template "factorio-server-charts.fullname" . }}
+    app: {{ template "factorio-headless-server.fullname" . }}
+    chart: {{ template "factorio-headless-server.fullname" . }}
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 data:
