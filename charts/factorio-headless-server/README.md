@@ -367,9 +367,9 @@ The following table lists the configurable parameters of the `factorio` chart an
 | server_settings.visibility.lan | bool | `true` | Game will be broadcast on LAN |
 | server_settings.visibility.public | bool | `false` | Game will be published on the official Factorio matching server |
 | service.annotations | object | `{}` | Additional custom annotations for Factorio service |
+| service.extraLabels | object | `{}` | Additional custom labels for Factorio service |
 | service.ipFamilies[0] | string | `"IPv4"` |  |
 | service.ipFamilyPolicy | string | `"SingleStack"` |  |
-| service.labels | object | `{}` | Additional custom labels for Factorio service |
 | service.port | int | `31497` | Factorio service port |
 | service.type | string | `"NodePort"` | Factorio service type. If you use "type: NodePort" set the port to a value you like in the range of 30000-32767. Leave it blank for a random port |
 | strategy | object | `{"type":"Recreate"}` | Strategy Parameters |

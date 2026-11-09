@@ -2,13 +2,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ template "factorio-server-charts.fullname" . }}-rcon-api
+  name: {{ template "factorio-headless-server.fullname" . }}-rcon-api
   annotations:
   {{- range $key, $value := .Values.rconAPI.ingress.annotations }}
     {{ $key }}: {{ $value | quote }}
   {{- end }}
   labels:
-    app: {{ template "factorio-server-charts.fullname" . }}
+    app: {{ template "factorio-headless-server.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
@@ -20,14 +20,14 @@ spec:
         paths:
           - backend:
               service:
-                name: {{ template "factorio-server-charts.fullname" . }}-rcon-api
+                name: {{ template "factorio-headless-server.fullname" . }}-rcon-api
                 port:
                   number: {{ .Values.rconAPI.httpPort }}
             path: /
             pathType: Prefix
           - backend:
               service:
-                name: {{ template "factorio-server-charts.fullname" . }}-rcon-api
+                name: {{ template "factorio-headless-server.fullname" . }}-rcon-api
                 port:
                   number: {{ .Values.rconAPI.grpcPort }}
             path: /grpc

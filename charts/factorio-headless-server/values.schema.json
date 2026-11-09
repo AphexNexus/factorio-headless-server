@@ -1848,6 +1848,15 @@
           "title": "annotations",
           "type": "object"
         },
+        "extraLabels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Additional custom labels for Factorio service",
+          "required": [],
+          "title": "extraLabels",
+          "type": "object"
+        },
         "ipFamilies": {
           "description": "# List of IP families (e.g. IPv4, IPv6) assigned to the service. This field is usually assigned automatically\n# based on cluster configuration and the ipFamilyPolicy field.\n# Ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/",
           "items": {
@@ -1866,15 +1875,6 @@
           "description": "# Represents the dual-stack-ness requested or required by this Service. Possible values are\n# SingleStack, PreferDualStack or RequireDualStack.\n# The ipFamilies and clusterIPs fields depend on the value of this field.\n# Ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/",
           "title": "ipFamilyPolicy",
           "type": "string"
-        },
-        "labels": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Additional custom labels for Factorio service",
-          "required": [],
-          "title": "labels",
-          "type": "object"
         },
         "port": {
           "default": 31497,

@@ -86,7 +86,7 @@ service:
   #   type: string
   # @schema
   # -- Additional custom labels for Factorio service
-  labels: {}
+  extraLabels: {}
 
 resources:
   ## We have to ensure that factorio have enough computing resources avaiable. We set here an absolute minimum
