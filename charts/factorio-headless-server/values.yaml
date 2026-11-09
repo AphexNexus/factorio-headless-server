@@ -68,11 +68,11 @@ service:
   ## NodePort setup
 
   ## ClusterIp setup
-  # ClusterIP:
-  #   port: 34197
+  ClusterIP:
+    port: 34197
   ## LoadBalancer setup
-  # type: LoadBalancer
-  # externalTrafficPolicy: Cluster
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
   # @schema
   # type: object
   # additionalProperties:
