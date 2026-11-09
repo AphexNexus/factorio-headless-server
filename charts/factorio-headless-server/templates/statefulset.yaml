@@ -320,8 +320,21 @@ spec:
         {{- end }}
         - name: datadir
         {{- if .Values.persistence.enabled }}
-          persistentVolumeClaim:
-            claimName: {{ if .Values.persistence.dataDir.existingClaim }} {{.Values.persistence.dataDir.existingClaim}} {{ else }}{{ template "factorio-headless-server.fullname" . }}-datadir {{ end }}
+          volumeClaimTemplate:
+          - metadata:
+              name: {{ template "factorio-headless-server.fullname" . }}-datadir
+            spec:
+              accessModes: [ "ReadWriteOnce" ]
+              resources:
+                requests:
+                  storage: {{ .Values.persistence.dataDir.Size | quote }}
+              {{- if .Values.persistence.storageClassName }}
+              {{- if (eq "-" .Values.persistence.storageClassName) }}
+              storageClassName: ""
+              {{- else }}
+              storageClassName: "{{ .Values.persistence.storageClassName }}"
+              {{- end }}
+              {{- end }}
         {{- else }}
           emptyDir: {}
         {{- end }}
