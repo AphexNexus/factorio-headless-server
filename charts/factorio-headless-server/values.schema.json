@@ -1893,7 +1893,7 @@
         },
         "ipFamilyPolicy": {
           "default": "SingleStack",
-          "description": "# Represents the dual-stack-ness requested or required by this Service. Possible values are\n# SingleStack, PreferDualStack or RequireDualStack.\n# The ipFamilies and clusterIPs fields depend on the value of this field.\n# Ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/",
+          "description": "Factorio service type. If you use \"type: NodePort\" set the port to a value you like in the range of 30000-32767. Leave it blank for a random port\ntype: NodePort\n# Represents the dual-stack-ness requested or required by this Service. Possible values are\n# SingleStack, PreferDualStack or RequireDualStack.\n# The ipFamilies and clusterIPs fields depend on the value of this field.\n# Ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/",
           "title": "ipFamilyPolicy",
           "type": "string"
         },
@@ -1911,31 +1911,14 @@
         }
       },
       "required": [
-        "type",
         "ipFamilyPolicy",
         "ipFamilies",
         "port",
         "ClusterIP",
+        "type",
         "externalTrafficPolicy"
       ],
       "title": "service",
-      "type": "object"
-    },
-    "strategy": {
-      "additionalProperties": false,
-      "description": "# IMPORTANT: use with care, it is suggested to leave as that for upgrade purposes\n# ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy\nStrategy Parameters",
-      "properties": {
-        "type": {
-          "default": "Recreate",
-          "description": "Strategy used to replace old pods",
-          "title": "type",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type"
-      ],
-      "title": "strategy",
       "type": "object"
     },
     "tolerations": {
@@ -1964,7 +1947,6 @@
     "nodeSelector",
     "service",
     "resources",
-    "strategy",
     "tolerations",
     "affinity",
     "persistence",
