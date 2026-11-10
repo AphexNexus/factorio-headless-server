@@ -318,26 +318,6 @@ spec:
             secretName: {{ template "factorio-headless-server.fullname" . }}-password
             {{- end }}
         {{- end }}
-        - name: datadir
-        {{- if .Values.persistence.enabled }}
-          volumeClaimTemplate:
-          - metadata:
-              name: {{ template "factorio-headless-server.fullname" . }}-datadir
-            spec:
-              accessModes: [ "ReadWriteOnce" ]
-              resources:
-                requests:
-                  storage: {{ .Values.persistence.dataDir.Size | quote }}
-              {{- if .Values.persistence.storageClassName }}
-              {{- if (eq "-" .Values.persistence.storageClassName) }}
-              storageClassName: ""
-              {{- else }}
-              storageClassName: "{{ .Values.persistence.storageClassName }}"
-              {{- end }}
-              {{- end }}
-        {{- else }}
-          emptyDir: {}
-        {{- end }}
         - name: {{ template "factorio-headless-server.fullname" . }}-serversettingsconfig
           configMap:
             name: {{ template "factorio-headless-server.fullname" . }}-serversettingsconfig
@@ -347,3 +327,18 @@ spec:
         - name: {{ template "factorio-headless-server.fullname" . }}-save-importer-configmap
           configMap:
             name: {{ template "factorio-headless-server.fullname" . }}-save-importer-configmap
+  volumeClaimTemplates:
+  - metadata:
+      name: datadir
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.persistence.dataDir.Size | quote }}
+      {{- if .Values.persistence.storageClassName }}
+      {{- if (eq "-" .Values.persistence.storageClassName) }}
+      storageClassName: ""
+      {{- else }}
+      storageClassName: "{{ .Values.persistence.storageClassName }}"
+      {{- end }}
+      {{- end }}
