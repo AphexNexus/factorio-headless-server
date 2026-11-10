@@ -187,18 +187,6 @@ spec:
         - name: {{ .name }}
           value: {{ .value | quote }}
         {{- end }}
-        {{- if and .Values.account.username .Values.account.token }}
-        - name: USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: {{ template "factorio-headless-server.fullname" . }}-account
-              key: username
-        - name: TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: {{ template "factorio-headless-server.fullname" . }}-account
-              key: token
-        {{- end }}
 {{- if .Values.rconAPI.enabled }}
       - name: {{ template "factorio-headless-server.fullname" . }}-rcon-api
         image: "{{ .Values.rconAPI.image.repository }}:{{ .Values.rconAPI.image.tag }}"
