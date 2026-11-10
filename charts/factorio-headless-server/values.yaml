@@ -29,6 +29,11 @@ image:
   ## You should set a fixed version, i.e.:
   # tag: "1.1.37"
 
+# @schema
+# type: object
+# additionalProperties:
+#   type: string
+# @schema
 # -- nodeSelector Node labels for pod assignment
 nodeSelector: {}
 #  beta.kubernetes.io/os: linux
@@ -97,11 +102,11 @@ resources:
     # -- The requested cpu for the Factorio containers
     cpu: 500m
   # -- If you like to limit Factorio resources
-  limits: {}
-  # limits:
-  #   memory: 1024Mi
-  #   cpu: 1000m
-
+  limits:
+    # -- The limited memory for the Factorio containers
+    memory: 1024Mi
+    # -- The limited cpu for the Factorio containers
+    cpu: 1000m
 
 ## IMPORTANT: use with care, it is suggested to leave as that for upgrade purposes
 ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy

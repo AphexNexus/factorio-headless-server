@@ -1173,7 +1173,9 @@
       "type": "object"
     },
     "nodeSelector": {
-      "additionalProperties": false,
+      "additionalProperties": {
+        "type": "string"
+      },
       "description": "nodeSelector Node labels for pod assignment",
       "required": [],
       "title": "nodeSelector",
@@ -1577,7 +1579,24 @@
         "limits": {
           "additionalProperties": false,
           "description": "If you like to limit Factorio resources",
-          "required": [],
+          "properties": {
+            "cpu": {
+              "default": "1000m",
+              "description": "The limited cpu for the Factorio containers",
+              "title": "cpu",
+              "type": "string"
+            },
+            "memory": {
+              "default": "1024Mi",
+              "description": "The limited memory for the Factorio containers",
+              "title": "memory",
+              "type": "string"
+            }
+          },
+          "required": [
+            "memory",
+            "cpu"
+          ],
           "title": "limits",
           "type": "object"
         },
@@ -1965,7 +1984,6 @@
     "securityContext",
     "podSecurityContext",
     "image",
-    "nodeSelector",
     "service",
     "resources",
     "tolerations",
