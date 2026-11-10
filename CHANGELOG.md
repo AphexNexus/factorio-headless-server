@@ -1,5 +1,11 @@
 # Changelog
 
+## V2.6.1 - 20261110
+
+### Small cleanup and updated schema values
+
+- Chart is deployable without having to suppress the helm schema
+
 ## V2.6.0 - 20261109
 
 ### Refactored from Deployment to StatefulSet
