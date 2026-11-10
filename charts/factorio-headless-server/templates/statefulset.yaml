@@ -58,12 +58,6 @@ spec:
               if [ -f "/gamePassword/game_password" ]; then
                 jq -M --rawfile game_password /gamePassword/game_password '.game_password=($game_password|gsub("[\\n\\t]"; ""))' /factorio/configs/server-settings.json > /tmp/server-settings.json && mv /tmp/server-settings.json /factorio/configs/server-settings.json
               fi
-              if [[ -n "$USERNAME" && -n "$TOKEN" ]]; then
-                jq --arg user "$USERNAME" --arg tok "$TOKEN" \
-                  '. + {"username": $user, "token": $tok }' \
-                  /factorio/configs/server-settings.json > /tmp/server-settings.json && \
-                  mv /tmp/server-settings.json /factorio/configs/server-settings.json
-              fi
               #sleep 100
               chmod -vR 777 /factorio/configs
               ls -alth /factorio
@@ -71,19 +65,6 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- if and .Values.account.username .Values.account.token }}
-          env:
-            - name: USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "factorio-headless-server.fullname" . }}-account
-                  key: username
-            - name: TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "factorio-headless-server.fullname" . }}-account
-                  key: token
-            {{- end }}
           volumeMounts:
             - name: datadir
               mountPath: /factorio
