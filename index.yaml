@@ -3,6 +3,27 @@ entries:
   factorio-headless-server:
   - apiVersion: v2
     appVersion: 2.1.24
+    created: "2026-11-10T22:40:08.213151658Z"
+    description: A Helm chart for running Factorio in Kubernetes
+    digest: fa5035e9a2171de50fb799e8b2df254ddb033c56bd40c21e57c7757da9f524c3
+    icon: https://factorio.com/static/img/factorio-wheel.png
+    keywords:
+    - game
+    - server
+    - headless
+    maintainers:
+    - email: justin.desilets@gmail.com
+      name: Justin Desilets
+      url: https://github.com/justindesilets
+    name: factorio-headless-server
+    sources:
+    - https://github.com/aphexnexus/factorio-headless-server
+    type: application
+    urls:
+    - https://github.com/AphexNexus/factorio-headless-server/releases/download/factorio-headless-server-2.6.1/factorio-headless-server-2.6.1.tgz
+    version: 2.6.1
+  - apiVersion: v2
+    appVersion: 2.1.24
     created: "2026-11-10T02:13:19.943479725Z"
     description: A Helm chart for running Factorio in Kubernetes
     digest: 9e67b26c7ed0641a6da16fd30ae7b6ff7cc05cf74ad2c39fddd2b4d996b7ccab
@@ -105,4 +126,4 @@ entries:
     urls:
     - https://github.com/justindesilets/factorio-server-charts/releases/download/factorio-server-charts-2.5.3/factorio-server-charts-2.5.3.tgz
     version: 2.5.3
-generated: "2026-11-10T02:13:19.943541922Z"
+generated: "2026-11-10T22:40:08.213214742Z"
