@@ -340,7 +340,9 @@ The following table lists the configurable parameters of the `factorio` chart an
 | rconAPI.serviceAnnotations | object | `{}` | Annotations to add to the RCON API service |
 | rconAPI.type | string | `"ClusterIP"` | Kubernetes service type for the RCON API (e.g., ClusterIP, NodePort, LoadBalancer) |
 | replicaCount | int | `1` | replicaCount Number of replicas to create (only 1 is supported) |
-| resources.limits | object | `{}` | If you like to limit Factorio resources |
+| resources.limits | object | `{"cpu":"1000m","memory":"1024Mi"}` | If you like to limit Factorio resources |
+| resources.limits.cpu | string | `"1000m"` | The limited cpu for the Factorio containers |
+| resources.limits.memory | string | `"1024Mi"` | The limited memory for the Factorio containers |
 | resources.requests.cpu | string | `"500m"` | The requested cpu for the Factorio containers |
 | resources.requests.memory | string | `"512Mi"` | The requested memory for the Factorio containers |
 | securityContext | object | `{"fsGroup":845}` | Useful for fixing file permissions. See official [docs](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/). |
