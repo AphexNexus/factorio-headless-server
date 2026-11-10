@@ -1,5 +1,16 @@
 # Changelog
 
+## V2.6.0 - 20261109
+
+### Refactored from Deployment to StatefulSet
+
+- Opinionated refactor: This assumes you would want a Factorio server to be persistent and refactors to use a Stateful Set with a Volume Claim Template. This ensures that if the server is deleted and redeployed it will get a consistent name and VPC.
+- Template values were refactored to depart from the fork. I wanted it to be obvious for anyone who might be working between charts to know which one they were operating in.
+- Service was updated to use the more common `extraLabels` template values.
+- Service assumes a load balancer configuration where you can apply an external IP address to allow easier connectivity / port forwarding.
+- helm deployment schema is valid
+- Multiple values were added to the `enemy_expansion` section as they were required in Factorio v2.1+ updates.
+
 ## V2.5.6 - 20261013
 
 ### Added service labels

@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "factorio-server-charts.fullname" . }}
+  name: {{ template "factorio-headless-server.fullname" . }}
 
   labels:
-    app: {{ template "factorio-server-charts.fullname" . }}
+    app: {{ template "factorio-headless-server.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
-  {{- if .Values.service.labels }}
-  {{- range $key, $value := .Values.service.labels }}
+  {{- if .Values.service.extraLabels }}
+  {{- range $key, $value := .Values.service.extraLabels }}
     {{ $key }}: {{ $value | quote }}
   {{- end }}
   {{- end }}
@@ -43,7 +43,7 @@ spec:
       nodePort: {{ .Values.service.port }}
       {{- end }}
   selector:
-    app: {{ template "factorio-server-charts.fullname" . }}
+    app: {{ template "factorio-headless-server.fullname" . }}
 {{- if .Values.service.externalIPs }}
   externalIPs:
 {{ toYaml .Values.service.externalIPs | indent 4 }}

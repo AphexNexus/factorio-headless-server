@@ -42,7 +42,7 @@ nodeSelector: {}
 ## The best way ist to define a ClusterIP service and define one or more externalIPs. Of course this IPs must be available on the node the factorio pod runs on!
 service:
   # -- Factorio service type. If you use "type: NodePort" set the port to a value you like in the range of 30000-32767. Leave it blank for a random port
-  type: NodePort
+  # type: NodePort
   ## Represents the dual-stack-ness requested or required by this Service. Possible values are
   ## SingleStack, PreferDualStack or RequireDualStack.
   ## The ipFamilies and clusterIPs fields depend on the value of this field.
@@ -68,11 +68,11 @@ service:
   ## NodePort setup
 
   ## ClusterIp setup
-  # ClusterIP:
-  #   port: 34197
+  ClusterIP:
+    port: 34197
   ## LoadBalancer setup
-  # type: LoadBalancer
-  # externalTrafficPolicy: Cluster
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
   # @schema
   # type: object
   # additionalProperties:
@@ -86,7 +86,7 @@ service:
   #   type: string
   # @schema
   # -- Additional custom labels for Factorio service
-  labels: {}
+  extraLabels: {}
 
 resources:
   ## We have to ensure that factorio have enough computing resources avaiable. We set here an absolute minimum
@@ -106,9 +106,9 @@ resources:
 ## IMPORTANT: use with care, it is suggested to leave as that for upgrade purposes
 ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
 # -- Strategy Parameters
-strategy:
+#strategy:
   # -- Strategy used to replace old pods
-  type: Recreate
+  # type: Recreate
   # type: RollingUpdate
   # rollingUpdate:
   #   maxSurge: 1
@@ -641,6 +641,12 @@ map_settings:
     min_expansion_cooldown: 14400
     # -- The default maximum expansion cooldown (max_expansion_cooldown) is 216,000 ticks (1 hour)
     max_expansion_cooldown: 216000
+    # -- Exponential factor used to determine the size of the settler group based on the evolution factor.
+    evolution_group_size_factor: 4
+    # -- Distance in chunks from the furthest base around to prevent expansions from being too close to existing bases.
+    min_expansion_distance: 3
+    # -- Cooldown in ticks for dispatching units when building bases.
+    build_base_unit_dispatch_cooldown: 1800
   unit_group:
     # -- The minimum time (measured in game ticks) that a pollution-triggered biters/spitters attack group waits and gathers before marching toward a target
     min_group_gathering_time: 3600

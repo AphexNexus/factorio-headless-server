@@ -1,14 +1,15 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "factorio-server-charts.fullname" . }}-serversettingsconfig
+  name: {{ template "factorio-headless-server.fullname" . }}-serversettingsconfig
   labels:
-    app: {{ template "factorio-server-charts.fullname" . }}
-    chart: {{ template "factorio-server-charts.fullname" . }}
+    app: {{ template "factorio-headless-server.fullname" . }}
+    chart: {{ template "factorio-headless-server.fullname" . }}
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 data:
   server-settings.json: |
+{{- $secretMap := dict "serverAccount" .}}
 {{ toJson .Values.server_settings | indent 4 }}
   map-gen-settings.json: |
 {{ toJson .Values.map_gen_settings | indent 4 }}

@@ -1,23 +1,23 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: {{ include "factorio-server-charts.fullname" . }}
+  name: {{ include "factorio-headless-server.fullname" . }}
   labels:
-    app: {{ template "factorio-server-charts.fullname" . }}
-    chart: {{ template "factorio-server-charts.fullname" . }}
+    app: {{ template "factorio-headless-server.fullname" . }}
+    chart: {{ template "factorio-headless-server.fullname" . }}
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ template "factorio-server-charts.fullname" . }}
-  strategy:
-{{ toYaml .Values.strategy | indent 4 }}
+      app: {{ template "factorio-headless-server.fullname" . }}
+  serviceName: {{ template "factorio-headless-server.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ template "factorio-server-charts.fullname" . }}
+        app: {{ template "factorio-headless-server.fullname" . }}
+        egress: external
     spec:
       {{- with .Values.securityContext }}
       securityContext:
@@ -68,7 +68,7 @@ spec:
           volumeMounts:
             - name: datadir
               mountPath: /factorio
-            - name: {{ template "factorio-server-charts.fullname" . }}-serversettingsconfig
+            - name: {{ template "factorio-headless-server.fullname" . }}-serversettingsconfig
               mountPath: /deployed-configs
             {{- if or (.Values.rcon.password) (.Values.rcon.passwordSecret) }}
             - name: rcon
@@ -104,7 +104,7 @@ spec:
           volumeMounts:
             - name: datadir
               mountPath: /factorio
-            - name: {{ template "factorio-server-charts.fullname" . }}-mod-downloader-configmap
+            - name: {{ template "factorio-headless-server.fullname" . }}-mod-downloader-configmap
               mountPath: /scripts
             {{- if or (.Values.account.accountSecret) (.Values.account.username) }}
             - name: account-data
@@ -127,11 +127,11 @@ spec:
           volumeMounts:
             - name: datadir
               mountPath: /factorio
-            - name: {{ template "factorio-server-charts.fullname" . }}-save-importer-configmap
+            - name: {{ template "factorio-headless-server.fullname" . }}-save-importer-configmap
               mountPath: /scripts
         {{- end }}
       containers:
-      - name: {{ template "factorio-server-charts.fullname" . }}
+      - name: {{ template "factorio-headless-server.fullname" . }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         {{- with .Values.podSecurityContext }}
@@ -187,8 +187,20 @@ spec:
         - name: {{ .name }}
           value: {{ .value | quote }}
         {{- end }}
+        {{- if and .Values.account.username .Values.account.token }}
+        - name: USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "factorio-headless-server.fullname" . }}-account
+              key: username
+        - name: TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "factorio-headless-server.fullname" . }}-account
+              key: token
+        {{- end }}
 {{- if .Values.rconAPI.enabled }}
-      - name: {{ template "factorio-server-charts.fullname" . }}-rcon-api
+      - name: {{ template "factorio-headless-server.fullname" . }}-rcon-api
         image: "{{ .Values.rconAPI.image.repository }}:{{ .Values.rconAPI.image.tag }}"
         imagePullPolicy: {{ .Values.rconAPI.image.pullPolicy }}
         livenessProbe:
@@ -217,7 +229,7 @@ spec:
           {{- end }}
 {{- end }}
 {{- if .Values.port_fixer.enabled }}
-      - name: {{ template "factorio-server-charts.fullname" . }}-port-fixer
+      - name: {{ template "factorio-headless-server.fullname" . }}-port-fixer
         image: "{{ .Values.port_fixer.image.repository }}:{{ .Values.port_fixer.image.tag }}"
         imagePullPolicy: {{ .Values.port_fixer.image.pullPolicy }}
         {{- with .Values.podSecurityContext }}
@@ -266,7 +278,7 @@ spec:
           {{- if .Values.account.accountSecret }}
             secretName: {{ .Values.account.accountSecret }}
           {{- else}}
-            secretName: {{ template "factorio-server-charts.fullname" . }}-account
+            secretName: {{ template "factorio-headless-server.fullname" . }}-account
           {{- end }}
         {{- end }}
         {{- if or (.Values.rcon.password) (.Values.rcon.passwordSecret) }}
@@ -275,7 +287,7 @@ spec:
             {{- if .Values.rcon.passwordSecret }}
             secretName: {{ .Values.rcon.passwordSecret }}
             {{- else }}
-            secretName: {{ template "factorio-server-charts.fullname" . }}-rcon
+            secretName: {{ template "factorio-headless-server.fullname" . }}-rcon
             {{- end }}
         {{- end }}
         {{- if or (.Values.serverPassword.game_password) (.Values.serverPassword.passwordSecret) }}
@@ -284,22 +296,30 @@ spec:
             {{- if .Values.serverPassword.passwordSecret }}
             secretName: {{ .Values.serverPassword.passwordSecret }}
             {{- else }}
-            secretName: {{ template "factorio-server-charts.fullname" . }}-password
+            secretName: {{ template "factorio-headless-server.fullname" . }}-password
             {{- end }}
         {{- end }}
-        - name: datadir
-        {{- if .Values.persistence.enabled }}
-          persistentVolumeClaim:
-            claimName: {{ if .Values.persistence.dataDir.existingClaim }} {{.Values.persistence.dataDir.existingClaim}} {{ else }}{{ template "factorio-server-charts.fullname" . }}-datadir {{ end }}
-        {{- else }}
-          emptyDir: {}
-        {{- end }}
-        - name: {{ template "factorio-server-charts.fullname" . }}-serversettingsconfig
+        - name: {{ template "factorio-headless-server.fullname" . }}-serversettingsconfig
           configMap:
-            name: {{ template "factorio-server-charts.fullname" . }}-serversettingsconfig
-        - name: {{ template "factorio-server-charts.fullname" . }}-mod-downloader-configmap
+            name: {{ template "factorio-headless-server.fullname" . }}-serversettingsconfig
+        - name: {{ template "factorio-headless-server.fullname" . }}-mod-downloader-configmap
           configMap:
-            name: {{ template "factorio-server-charts.fullname" . }}-mod-downloader-configmap
-        - name: {{ template "factorio-server-charts.fullname" . }}-save-importer-configmap
+            name: {{ template "factorio-headless-server.fullname" . }}-mod-downloader-configmap
+        - name: {{ template "factorio-headless-server.fullname" . }}-save-importer-configmap
           configMap:
-            name: {{ template "factorio-server-charts.fullname" . }}-save-importer-configmap
+            name: {{ template "factorio-headless-server.fullname" . }}-save-importer-configmap
+  volumeClaimTemplates:
+  - metadata:
+      name: datadir
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.persistence.dataDir.Size | quote }}
+      {{- if .Values.persistence.storageClassName }}
+      {{- if (eq "-" .Values.persistence.storageClassName) }}
+      storageClassName: ""
+      {{- else }}
+      storageClassName: "{{ .Values.persistence.storageClassName }}"
+      {{- end }}
+      {{- end }}
